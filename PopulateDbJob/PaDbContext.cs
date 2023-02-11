@@ -1,4 +1,5 @@
 ﻿using DataModel.Model;
+using DocumentFormat.OpenXml.InkML;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -6,14 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PaDesktop.Core
+namespace PopulateDbJob
 {
-    class PaDbContext: DbContext
+    class PaDbContext : DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite(
-                "Data Source=../database/pa.db;");
+                "Data Source=file:pa.sqlite;Mode=ReadWrite;");
             optionsBuilder.UseLazyLoadingProxies(true);
         }
 

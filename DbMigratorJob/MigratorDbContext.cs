@@ -1,19 +1,18 @@
-﻿using DataModel.Model;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace PaDesktop.Core
+using DataModel.Model;
+namespace DbMigratorJob
 {
-    class PaDbContext: DbContext
+    internal class MigratorDbContext: DbContext
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite(
-                "Data Source=../database/pa.db;");
+                "Data Source=../database/pa.sqlite;");
             optionsBuilder.UseLazyLoadingProxies(true);
         }
 
