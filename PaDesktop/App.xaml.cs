@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -8,10 +9,19 @@ using System.Windows;
 
 namespace PaDesktop
 {
-    /// <summary>
-    /// Interaction logic for App.xaml
-    /// </summary>
     public partial class App : Application
     {
+        public IServiceProvider Services { get; }
+        public App()
+        {
+            Services = ConfigureServices();
+            InitializeComponent();
+        }
+
+        private static IServiceProvider ConfigureServices()
+        {
+            var services = new ServiceCollection();
+            return services.BuildServiceProvider();
+        }
     }
 }

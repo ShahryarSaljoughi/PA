@@ -7,22 +7,20 @@ using System.Threading.Tasks;
 
 namespace Services.Dto
 {
-    public class InputDto
+    public class EscallationInputDto
     {
         public TimeBox? BaseTimeBox { get; set; }
         public decimal Coefficient { get; set; } // 0.95 or 0.975 or 1
         public PersianDate? PreviousStatementTime { get; set; }
         public PersianDate? CurrentStateMentTime { get; set; }
-
-
-
-
+        public PersianDate? LandSurrenderTime { get; set; }
+        public List<PricesInputDto>? PreviousPrices { get; set; }
+        public List<PricesInputDto>? CurrentPrices { get; set; }
     }
 
-    public class PersianDate
+    public class PricesInputDto
     {
-        public int Year { get; set; }
-        public int Month { get; set; }
-        public int Day { get; set; }
+        public Subfield? Subfield { get; set; }
+        public decimal Price { get; set; }
     }
 }
