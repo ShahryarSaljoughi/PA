@@ -12,13 +12,13 @@ namespace Services
 {
     public class TimeBoxService : ITimeBoxService, INotifyPropertyChanged
     {
-        private TimeBox[]? timeBoxes = null;
+        private TimeBox[]? TimeBoxes = null;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public async Task<TimeBox[]> GetAllTimeBoxesAsync()
         {
-            if (timeBoxes is not null) return timeBoxes;
+            if (TimeBoxes is not null) return TimeBoxes;
             using var db = new PaDbContext();
             var timeboxes = await db.TimeBoxes.ToArrayAsync();
             return timeboxes;

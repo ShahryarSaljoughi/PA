@@ -1,14 +1,26 @@
-﻿<Window x:Class="PaDesktop.MainWindow"
+﻿<Window x:Class="PaDesktop.View.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:PaDesktop"
-        xmlns:persianDateControls="clr-namespace:Mohsen.PersianDateControls;assembly=Mohsen.PersianDateControls"
-
+        xmlns:local="clr-namespace:PaDesktop.View"
+        xmlns:viewmodels="clr-namespace:PaDesktop.ViewModel"
+        xmlns:timeboxVM="clr-namespace:PaDesktop.ViewModel"
+        xmlns:persianDateControls="clr-namespace:Mohsen.PersianDateControls;assembly=Mohsen.PersianDateControls" xmlns:local1="clr-namespace:PaDesktop.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid VerticalAlignment="Top" FlowDirection="RightToLeft" MaxWidth="900">
+    
+    <Grid 
+        VerticalAlignment="Top" 
+        FlowDirection="RightToLeft" 
+        MaxWidth="900">
+        <Grid.Resources>
+            <timeboxVM:TimeBoxesList x:Key="alltimeboxes" ></timeboxVM:TimeBoxesList>
+        </Grid.Resources>
+        <Grid.DataContext>
+            <Binding Source="{StaticResource alltimeboxes}" />
+        </Grid.DataContext>
+
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
@@ -28,7 +40,7 @@
         </DockPanel>
         <DockPanel Margin="30, 30, 50, 30" Grid.Column="0" Grid.Row="1">
             <Label Margin="10" >دوره مبنای قرارداد:</Label>
-            <ComboBox ></ComboBox>
+            <ComboBox ItemsSource="{Binding }" ></ComboBox>
         </DockPanel>
         <DockPanel Margin="50, 30, 30, 30" Grid.Column="1" Grid.Row="1">
             <Label Margin="10" >ضریب به کار رفته در ضریب تعدیل:</Label>
@@ -41,6 +53,7 @@
                     <Thickness Top="100" Left="240"></Thickness>
                 </Button.Margin>
             </Button>
+
         </DockPanel>
     </Grid>
 </Window>
