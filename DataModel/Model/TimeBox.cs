@@ -12,5 +12,19 @@ namespace DataModel.Model
         public virtual DateTime Start { get; set; }
         public virtual DateTime End { get; set; }
         public virtual IList<PAIndex>? PAIndexes { get; set; }
+
+        public override string ToString()
+        {
+            var numToWord = new Dictionary<int, string>()
+            {
+                {1, "اول" },
+                {2, "دوم" },
+                {3, "سوم" },
+                {4, "چهارم" },
+            };
+            return ThreeMonthNo > 0 ? 
+                string.Join(" ", "سه‌ماهه ", numToWord[ThreeMonthNo], SolarYear) 
+                : string.Join(" ", Month, SolarYear);
+        }
     }
 }

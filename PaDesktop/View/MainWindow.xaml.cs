@@ -23,9 +23,17 @@ namespace PaDesktop.View
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
+            var viewsource = ((CollectionViewSource)panel.Resources["timeboxescollectionview"]);
+            viewsource
+                .SortDescriptions.Add(
+                new System.ComponentModel.SortDescription("SolarYear", System.ComponentModel.ListSortDirection.Descending));
+            viewsource
+                .SortDescriptions.Add(
+                new System.ComponentModel.SortDescription("ThreeMonthNo", System.ComponentModel.ListSortDirection.Descending));
         }
     }
 }

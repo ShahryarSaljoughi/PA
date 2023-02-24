@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:PaDesktop.View"
         xmlns:viewmodels="clr-namespace:PaDesktop.ViewModel"
         xmlns:timeboxVM="clr-namespace:PaDesktop.ViewModel"
+        xmlns:converters="clr-namespace:PaDesktop.Converter"
         xmlns:persianDateControls="clr-namespace:Mohsen.PersianDateControls;assembly=Mohsen.PersianDateControls" xmlns:local1="clr-namespace:PaDesktop.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
@@ -13,9 +14,15 @@
     <Grid 
         VerticalAlignment="Top" 
         FlowDirection="RightToLeft" 
-        MaxWidth="900">
+        MaxWidth="900"
+        Name="panel">
         <Grid.Resources>
             <timeboxVM:TimeBoxesList x:Key="alltimeboxes" ></timeboxVM:TimeBoxesList>
+            <CollectionViewSource
+                Source="{Binding Source={StaticResource alltimeboxes}}"
+                
+                x:Key="timeboxescollectionview"/>
+            <!--<converters:BaseConverter x:Key="baseconverterref" />-->
         </Grid.Resources>
         <Grid.DataContext>
             <Binding Source="{StaticResource alltimeboxes}" />
@@ -40,7 +47,8 @@
         </DockPanel>
         <DockPanel Margin="30, 30, 50, 30" Grid.Column="0" Grid.Row="1">
             <Label Margin="10" >دوره مبنای قرارداد:</Label>
-            <ComboBox ItemsSource="{Binding }" ></ComboBox>
+            <ComboBox ItemsSource="{Binding Source={StaticResource timeboxescollectionview}}" ></ComboBox>
+            <!--Converter={StaticResource baseconverterref}-->
         </DockPanel>
         <DockPanel Margin="50, 30, 30, 30" Grid.Column="1" Grid.Row="1">
             <Label Margin="10" >ضریب به کار رفته در ضریب تعدیل:</Label>
