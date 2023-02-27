@@ -21,12 +21,19 @@ namespace PaDesktop.View
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class EscallationInputPage : UserControl
     {
-        
-        public MainWindow()
+
+        public EscallationInputPage()
         {
             InitializeComponent();
+            var viewsource = ((CollectionViewSource)panel.Resources["timeboxescollectionview"]);
+            viewsource
+                .SortDescriptions.Add(
+                new System.ComponentModel.SortDescription("SolarYear", System.ComponentModel.ListSortDirection.Descending));
+            viewsource
+                .SortDescriptions.Add(
+                new System.ComponentModel.SortDescription("ThreeMonthNo", System.ComponentModel.ListSortDirection.Descending));
         }
     }
 }

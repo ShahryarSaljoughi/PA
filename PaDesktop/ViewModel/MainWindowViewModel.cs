@@ -11,25 +11,39 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace PaDesktop.ViewModel
 {
     public class MainWindowViewModel : ObservableObject
+
     {
-        public Task<TimeBox[]> LoadTimeBoxesTask;
-        public ObservableCollection<TimeBox>? AllTimeBoxes;
+        private object _currentPage;
+        public EscallationInputViewModel EscallationInputViewModel { get; set; } = new EscallationInputViewModel();
+        public ICommand GoToEscallationInputPage { get; set; }
+        public ICommand GoToIndexEditPage { get; set; }
+
+        public object CurrentPage
+        {
+            get { return _currentPage; }
+            set
+            {
+                _currentPage = value;
+                OnPropertyChanged();
+            }
+        }
 
         public MainWindowViewModel()
         {
-            var service = App.Current.Services.GetService<ITimeBoxService>();
-            LoadTimeBoxesTask = service?.GetAllTimeBoxesAsync() ?? throw new Exception("IoC not working");
-            LoadTimeBoxesTask.ContinueWith(async t => 
+            //_currentPage = EscallationInputViewModel;
+            GoToEscallationInputPage = new RelayCommand(obj =>
             {
-                var timeboxes = await t;
-                AllTimeBoxes = new ObservableCollection<TimeBox>(timeboxes);
-                OnPropertyChanged(); 
+                CurrentPage = EscallationInputViewModel;
             });
-
+            GoToIndexEditPage = new RelayCommand(obj =>
+            {
+                CurrentPage = EscallationInputViewModel;
+            });
         }
     }
 }

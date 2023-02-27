@@ -5,63 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PaDesktop.View"
         xmlns:viewmodels="clr-namespace:PaDesktop.ViewModel"
-        xmlns:timeboxVM="clr-namespace:PaDesktop.ViewModel"
-        xmlns:converters="clr-namespace:PaDesktop.Converter"
+        
         xmlns:persianDateControls="clr-namespace:Mohsen.PersianDateControls;assembly=Mohsen.PersianDateControls" xmlns:local1="clr-namespace:PaDesktop.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    
-    <Grid 
-        VerticalAlignment="Top" 
-        FlowDirection="RightToLeft" 
-        MaxWidth="900"
-        Name="panel">
-        <Grid.Resources>
-            <timeboxVM:TimeBoxesList x:Key="alltimeboxes" ></timeboxVM:TimeBoxesList>
-            <CollectionViewSource
-                Source="{Binding Source={StaticResource alltimeboxes}}"
-                
-                x:Key="timeboxescollectionview"/>
-            <!--<converters:BaseConverter x:Key="baseconverterref" />-->
-        </Grid.Resources>
-        <Grid.DataContext>
-            <Binding Source="{StaticResource alltimeboxes}" />
-        </Grid.DataContext>
-
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
+        Title="MainWindow" Height="640" Width="1024">
+    <Window.DataContext>
+        <viewmodels:MainWindowViewModel />
+    </Window.DataContext>
+    <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <DockPanel Margin="30, 30, 50, 30" Grid.Column="0">
-            <Label Margin="10" >تاریخ صورت وضعیت قبلی</Label>
-            <persianDateControls:PersianDatePicker Grid.Column="0" ></persianDateControls:PersianDatePicker>
-        </DockPanel>
-        <DockPanel Margin="50, 30, 30, 30" Grid.Column="1">
-            <Label Margin="10" >تاریخ صورت وضعیت فعلی</Label>
-            <persianDateControls:PersianDatePicker Grid.Column="0" ></persianDateControls:PersianDatePicker>
-        </DockPanel>
-        <DockPanel Margin="30, 30, 50, 30" Grid.Column="0" Grid.Row="1">
-            <Label Margin="10" >دوره مبنای قرارداد:</Label>
-            <ComboBox ItemsSource="{Binding Source={StaticResource timeboxescollectionview}}" ></ComboBox>
-            <!--Converter={StaticResource baseconverterref}-->
-        </DockPanel>
-        <DockPanel Margin="50, 30, 30, 30" Grid.Column="1" Grid.Row="1">
-            <Label Margin="10" >ضریب به کار رفته در ضریب تعدیل:</Label>
-            <ComboBox ></ComboBox>
-        </DockPanel>
-        <DockPanel Grid.Row="2" Grid.Column="1" >
-            <Button MaxWidth="100" MinHeight="40">
-                مرحله بعد
-                <Button.Margin>
-                    <Thickness Top="100" Left="240"></Thickness>
-                </Button.Margin>
-            </Button>
 
-        </DockPanel>
+        <StackPanel>
+            <Button>ویرایش شاخص‌ها</Button>
+            <Button Command="{Binding GoToEscallationInputPage}" >محاسبه تعدیل</Button>
+        </StackPanel>
+        <Grid Grid.Column="1">
+            <ContentControl Content="{Binding CurrentPage}" />
+
+
+        </Grid>
     </Grid>
 </Window>
