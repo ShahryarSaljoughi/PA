@@ -12,6 +12,7 @@
         Title="تعدیل" Height="640" Width="1024"
         Background="{DynamicResource SystemControlPageBackgroundAltHighBrush}"
         Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"
+        Loaded="Window_Loaded"
         ui:ThemeManager.IsThemeAware="True">
     <Window.Resources>
         <DataTemplate DataType="{x:Type viewModel:EscallationInputViewModel}">
@@ -24,7 +25,6 @@
         <Style TargetType="Label" >
             <Style.Setters>
                 <Setter Property="FontFamily" Value="/Assets/Font/IRANSans" />
-
             </Style.Setters>
         </Style>
     </Window.Resources>

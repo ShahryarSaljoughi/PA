@@ -5,5 +5,6 @@ namespace Services.Abstractions
     public interface ITimeBoxService
     {
         Task<TimeBox[]> GetAllTimeBoxesAsync();
+        Task LoadAsync();
     }
 }

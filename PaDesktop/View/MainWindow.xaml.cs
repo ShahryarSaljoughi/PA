@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using PaDesktop.Core;
 using PaDesktop.ViewModel;
+using Services.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,12 +25,12 @@ namespace PaDesktop.View
     /// </summary>
     public partial class MainWindow
     {
-        
-        public MainWindow(MainWindowViewModel vm)
+        public ITimeBoxService TimeBoxService { get; set; }
+        public MainWindow(MainWindowViewModel vm, ITimeBoxService timeBoxService)
         {
             InitializeComponent();
             DataContext = vm;
-            
+            TimeBoxService = timeBoxService;
         }
 
         private void escacalnav_MouseDown(object sender, MouseButtonEventArgs e)
@@ -40,6 +41,11 @@ namespace PaDesktop.View
         private void indexeditnav_MouseDown(object sender, MouseButtonEventArgs e)
         {
             ((MainWindowViewModel)DataContext).GoToIndexEditPage.Execute(null);
+        }
+
+        private async void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            await TimeBoxService.LoadAsync();
         }
     }
 }

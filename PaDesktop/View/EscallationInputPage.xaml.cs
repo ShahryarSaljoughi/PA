@@ -19,29 +19,24 @@ using System.Windows.Shapes;
 
 namespace PaDesktop.View
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class EscallationInputPage : UserControl
     {
+        private EscallationInputViewModel? ViewModel { get; set; } 
         public EscallationInputPage()
         {
             InitializeComponent();
-            DataContext = App.Current.Services.GetService(typeof(EscallationInputViewModel));
+            ViewModel = (EscallationInputViewModel)App.Current.Services.GetService(typeof(EscallationInputViewModel));
+            DataContext = ViewModel;
         }
         public EscallationInputPage(EscallationInputViewModel vm)
         {
             InitializeComponent();
             DataContext = vm;
+        }
 
-            var viewsource = ((CollectionViewSource)panel.Resources["timeboxescollectionview"]);
-            viewsource
-                .SortDescriptions.Add(
-                new System.ComponentModel.SortDescription("SolarYear", System.ComponentModel.ListSortDirection.Descending));
-            viewsource
-                .SortDescriptions.Add(
-                new System.ComponentModel.SortDescription("ThreeMonthNo", System.ComponentModel.ListSortDirection.Descending));
-            
+        private async void EscallationInputPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            await ViewModel?.PopulateDataAsync();
         }
     }
 }

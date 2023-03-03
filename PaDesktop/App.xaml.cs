@@ -32,6 +32,7 @@ namespace PaDesktop
             services.AddSingleton<EscallationInputViewModel>();
             services.AddSingleton<IndexEditViewModel>();
             services.AddSingleton<Core.PaDbContext, Core.PaDbContext>();
+            services.AddSingleton<Services.PaDbContext, Services.PaDbContext>();
             services.AddSingleton<ITimeBoxService, TimeBoxService>();
             services.AddScoped<IEscallationCalculator, EscallationCalculator>();
             return services.BuildServiceProvider();

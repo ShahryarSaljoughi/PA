@@ -15,19 +15,23 @@ namespace PaDesktop.ViewModel
     public class EscallationInputViewModel: ObservableObject
     {
         public Task<TimeBox[]> LoadTimeBoxesTask;
-        public ObservableCollection<TimeBox>? AllTimeBoxes;
+        public ObservableCollection<TimeBox>? AllTimeBoxes { get; set; } = new();
         public List<double> Coefficients { get; } = new List<double>() { 0.9, 0.95, 0.975, 1};
         public EscallationInputDto escallationInputDto { get; } = new EscallationInputDto();
+        
         public EscallationInputViewModel()
         {
-            var service = App.Current.Services.GetService<ITimeBoxService>();
-            LoadTimeBoxesTask = service?.GetAllTimeBoxesAsync() ?? throw new Exception("IoC not working");
-            LoadTimeBoxesTask.ContinueWith(async t =>
+        }
+
+        public async Task PopulateDataAsync()
+        {
+            var service = App.Current.Services.GetService<ITimeBoxService>() ?? throw new Exception("IoC not working");
+            var t =  (await service.GetAllTimeBoxesAsync()).OrderByDescending(x => x.SolarYear).ThenBy(x => x.ThreeMonthNo);
+            foreach (var item in t)
             {
-                var timeboxes = await t;
-                AllTimeBoxes = new ObservableCollection<TimeBox>(timeboxes);
-                OnPropertyChanged();
-            });
+                AllTimeBoxes?.Add(item);
+            }
+            OnPropertyChanged();
 
         }
     }

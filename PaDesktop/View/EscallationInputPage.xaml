@@ -10,7 +10,8 @@
         xmlns:converters="clr-namespace:PaDesktop.Converter"
         xmlns:persianDateControls="clr-namespace:Mohsen.PersianDateControls;assembly=Mohsen.PersianDateControls" xmlns:local1="clr-namespace:PaDesktop.ViewModel"
         mc:Ignorable="d"
-        Height="auto" Width="auto">
+        Height="auto" Width="auto"
+        Loaded="EscallationInputPage_Loaded">
 
     <Grid 
         VerticalAlignment="Top" 
@@ -19,23 +20,11 @@
         MaxWidth="900"
         Name="panel">
         <Grid.Resources>
-            <timeboxVM:TimeBoxesList x:Key="alltimeboxes" />
-            <CollectionViewSource
-                Source="{Binding Source={StaticResource alltimeboxes}}"
-                x:Key="timeboxescollectionview">
-                <CollectionViewSource.SortDescriptions>
-                    <scm:SortDescription Direction="Descending" PropertyName="SolarYear" />
-                    <scm:SortDescription PropertyName="ThreeMonthNo" />
-                </CollectionViewSource.SortDescriptions>
-            </CollectionViewSource>
             <Style TargetType="StackPanel">
                 <Setter Property="Margin" Value="5 20 5 10"></Setter>
             </Style>
 
         </Grid.Resources>
-        <!--<Grid.DataContext>
-            <Binding Source="{StaticResource alltimeboxes}" />
-        </Grid.DataContext>-->
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -63,15 +52,13 @@
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="2">
-            <StackPanel.DataContext>
-                <Binding Source="{StaticResource alltimeboxes}" />
-            </StackPanel.DataContext>
+            
             <Label Grid.Row="4" Margin="10" >دوره مبنای قرارداد:</Label>
             <ComboBox 
-                Margin="130 0 0 0"
+                Margin="133 0 0 0"
                 Grid.Row="5" 
-                MinWidth="150"
-                ItemsSource="{Binding Source={StaticResource timeboxescollectionview}}" ></ComboBox>
+                MinWidth="170"
+                ItemsSource="{Binding AllTimeBoxes }" ></ComboBox>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="3">
@@ -79,7 +66,7 @@
             <ComboBox 
                 DataContext ="{Binding }"
                 ItemsSource="{Binding Path=Coefficients}"
-                MinWidth="150"
+                MinWidth="170"
                 Margin="40 0 0 0"
                 Grid.Row="7" ></ComboBox>
         </StackPanel>
