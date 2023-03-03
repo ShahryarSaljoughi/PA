@@ -12,6 +12,7 @@ namespace DataModel.Model
         public virtual DateTime Start { get; set; }
         public virtual DateTime End { get; set; }
         public virtual IList<PAIndex>? PAIndexes { get; set; }
+        public string Text => ToString();
 
         public override string ToString()
         {

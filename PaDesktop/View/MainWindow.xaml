@@ -3,29 +3,61 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:ui="http://schemas.modernwpf.com/2019"
         xmlns:local="clr-namespace:PaDesktop.View"
-        xmlns:viewmodels="clr-namespace:PaDesktop.ViewModel"
-        
-        xmlns:persianDateControls="clr-namespace:Mohsen.PersianDateControls;assembly=Mohsen.PersianDateControls" xmlns:local1="clr-namespace:PaDesktop.ViewModel"
+        xmlns:viewModel="clr-namespace:PaDesktop.ViewModel"
+        xmlns:view="clr-namespace:PaDesktop.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="640" Width="1024">
-    <Window.DataContext>
-        <viewmodels:MainWindowViewModel />
-    </Window.DataContext>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+        ui:WindowHelper.UseModernWindowStyle="True"
+        Title="تعدیل" Height="640" Width="1024"
+        Background="{DynamicResource SystemControlPageBackgroundAltHighBrush}"
+        Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"
+        ui:ThemeManager.IsThemeAware="True">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewModel:EscallationInputViewModel}">
+            <view:EscallationInputPage></view:EscallationInputPage>
+        </DataTemplate>
 
-        <StackPanel>
-            <Button>ویرایش شاخص‌ها</Button>
-            <Button Command="{Binding GoToEscallationInputPage}" >محاسبه تعدیل</Button>
-        </StackPanel>
-        <Grid Grid.Column="1">
-            <ContentControl Content="{Binding CurrentPage}" />
+        <DataTemplate DataType="{x:Type viewModel:IndexEditViewModel}">
+            <view:IndexEdit></view:IndexEdit>
+        </DataTemplate>
+        <Style TargetType="Label" >
+            <Style.Setters>
+                <Setter Property="FontFamily" Value="/Assets/Font/IRANSans" />
+
+            </Style.Setters>
+        </Style>
+    </Window.Resources>
+
+    <Grid FlowDirection="RightToLeft">
 
 
-        </Grid>
+        <ui:NavigationView PaneDisplayMode="Auto">
+            <ui:NavigationView.MenuItems>
+                <ui:NavigationViewItem 
+                    x:Name="indexeditnav"
+                    MouseDown="indexeditnav_MouseDown"
+                    Icon="Edit"
+                    Content="ویرایش شاخص‌ها"  />
+                <ui:NavigationViewItem 
+                    MouseDown="escacalnav_MouseDown"
+                    Icon="Calculator"
+                    x:Name="escacalnav"
+                    Content="محاسبه تعدیل" />
+            </ui:NavigationView.MenuItems>
+
+            <!--page container-->
+            <Grid   Grid.Column="1">
+                <ContentControl Content="{Binding CurrentPage}">
+                    <!--<ContentControl.ContentTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="Hello" />
+                        </DataTemplate>
+                    </ContentControl.ContentTemplate>-->
+                </ContentControl>
+                <!--<TextBlock Width="auto" FontSize="20" Text="{Binding Path=CurrentPage}" />-->
+            </Grid>
+        </ui:NavigationView>
+
     </Grid>
 </Window>

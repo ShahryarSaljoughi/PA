@@ -1,6 +1,7 @@
 ﻿using DataModel.Model;
 using Microsoft.EntityFrameworkCore;
 using PaDesktop.Core;
+using PaDesktop.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,12 +22,24 @@ namespace PaDesktop.View
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         
-        public MainWindow()
+        public MainWindow(MainWindowViewModel vm)
         {
             InitializeComponent();
+            DataContext = vm;
+            
+        }
+
+        private void escacalnav_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ((MainWindowViewModel)DataContext).GoToEscallationInputPage.Execute(null);
+        }
+
+        private void indexeditnav_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ((MainWindowViewModel)DataContext).GoToIndexEditPage.Execute(null);
         }
     }
 }

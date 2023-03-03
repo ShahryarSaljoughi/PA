@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using PaDesktop.Core;
 using Services.Abstractions;
+using Services.Dto;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,7 +16,8 @@ namespace PaDesktop.ViewModel
     {
         public Task<TimeBox[]> LoadTimeBoxesTask;
         public ObservableCollection<TimeBox>? AllTimeBoxes;
-
+        public List<double> Coefficients { get; } = new List<double>() { 0.9, 0.95, 0.975, 1};
+        public EscallationInputDto escallationInputDto { get; } = new EscallationInputDto();
         public EscallationInputViewModel()
         {
             var service = App.Current.Services.GetService<ITimeBoxService>();

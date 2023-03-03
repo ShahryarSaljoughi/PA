@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Security;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,8 +19,10 @@ namespace PaDesktop.ViewModel
     public class MainWindowViewModel : ObservableObject
 
     {
+        public string Hello { get; set; } = "Hello";
         private object _currentPage;
-        public EscallationInputViewModel EscallationInputViewModel { get; set; } = new EscallationInputViewModel();
+        public EscallationInputViewModel EscallationInputViewModel { get; set; }
+        public IndexEditViewModel IndexEditViewModel { get; set; }
         public ICommand GoToEscallationInputPage { get; set; }
         public ICommand GoToIndexEditPage { get; set; }
 
@@ -33,17 +36,19 @@ namespace PaDesktop.ViewModel
             }
         }
 
-        public MainWindowViewModel()
+        public MainWindowViewModel(IndexEditViewModel indexmVm, EscallationInputViewModel escallationInputVm)
         {
-            //_currentPage = EscallationInputViewModel;
+            EscallationInputViewModel = escallationInputVm;
+            IndexEditViewModel = indexmVm;
             GoToEscallationInputPage = new RelayCommand(obj =>
             {
                 CurrentPage = EscallationInputViewModel;
             });
             GoToIndexEditPage = new RelayCommand(obj =>
             {
-                CurrentPage = EscallationInputViewModel;
+                CurrentPage = IndexEditViewModel;
             });
+            CurrentPage = EscallationInputViewModel;
         }
     }
 }

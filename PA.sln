@@ -11,11 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataModel", "DataModel\Data
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbMigratorJob", "DbMigratorJob\DbMigratorJob.csproj", "{9A2AEBA9-C14A-4E5F-B32D-8D6FB9B03455}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "Utilities\Utilities.csproj", "{982B4A3C-C571-415E-9FA5-39A0C609F7D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utilities", "Utilities\Utilities.csproj", "{982B4A3C-C571-415E-9FA5-39A0C609F7D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbHolder", "DbHolder\DbHolder.csproj", "{F77B675E-DC63-4C43-9C08-E3C697251329}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DbHolder", "DbHolder\DbHolder.csproj", "{F77B675E-DC63-4C43-9C08-E3C697251329}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{DAA03ED1-CB06-44AF-92C0-716EB1F67A2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{DAA03ED1-CB06-44AF-92C0-716EB1F67A2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,7 @@
 ﻿using DataModel.Model;
 using Microsoft.EntityFrameworkCore;
 using PaDesktop.Core;
+using PaDesktop.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,10 +24,16 @@ namespace PaDesktop.View
     /// </summary>
     public partial class EscallationInputPage : UserControl
     {
-
         public EscallationInputPage()
         {
             InitializeComponent();
+            DataContext = App.Current.Services.GetService(typeof(EscallationInputViewModel));
+        }
+        public EscallationInputPage(EscallationInputViewModel vm)
+        {
+            InitializeComponent();
+            DataContext = vm;
+
             var viewsource = ((CollectionViewSource)panel.Resources["timeboxescollectionview"]);
             viewsource
                 .SortDescriptions.Add(
@@ -34,6 +41,7 @@ namespace PaDesktop.View
             viewsource
                 .SortDescriptions.Add(
                 new System.ComponentModel.SortDescription("ThreeMonthNo", System.ComponentModel.ListSortDirection.Descending));
+            
         }
     }
 }
