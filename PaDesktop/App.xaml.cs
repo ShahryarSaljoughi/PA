@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using PaDesktop.Core;
+using PaDesktop.Service;
 using PaDesktop.View;
 using PaDesktop.ViewModel;
 using Services;
@@ -31,10 +32,12 @@ namespace PaDesktop
             services.AddSingleton<MainWindowViewModel>();
             services.AddSingleton<EscallationInputViewModel>();
             services.AddSingleton<IndexEditViewModel>();
+            services.AddSingleton<PriceInputViewModel>();
             services.AddSingleton<Core.PaDbContext, Core.PaDbContext>();
             services.AddSingleton<Services.PaDbContext, Services.PaDbContext>();
             services.AddSingleton<ITimeBoxService, TimeBoxService>();
-            services.AddScoped<IEscallationCalculator, EscallationCalculator>();
+            services.AddSingleton<IEscallationCalculator, EscallationCalculator>();
+            services.AddSingleton<INavigationService, NavigationService>();
             return services.BuildServiceProvider();
         }
 

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PaDesktop.Core
 {
-    public class ObservableObject : INotifyPropertyChanged
+    public class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
         public void OnPropertyChanged([CallerMemberName] string? propertyName=default)

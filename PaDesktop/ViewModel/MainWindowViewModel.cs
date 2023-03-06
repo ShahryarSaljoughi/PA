@@ -1,6 +1,7 @@
 ﻿using DataModel.Model;
 using Microsoft.Extensions.DependencyInjection;
 using PaDesktop.Core;
+using PaDesktop.Service;
 using Services.Abstractions;
 using System;
 using System.Collections.Generic;
@@ -16,39 +17,37 @@ using System.Windows.Input;
 
 namespace PaDesktop.ViewModel
 {
-    public class MainWindowViewModel : ObservableObject
+    public class MainWindowViewModel : Core.ViewModelBase
 
     {
+        private INavigationService NavigationService { get; set; }
         public string Hello { get; set; } = "Hello";
-        private object _currentPage;
         public EscallationInputViewModel EscallationInputViewModel { get; set; }
         public IndexEditViewModel IndexEditViewModel { get; set; }
         public ICommand GoToEscallationInputPage { get; set; }
         public ICommand GoToIndexEditPage { get; set; }
+        public ViewModelBase CurrentPage => NavigationService.CurrentPage;
 
-        public object CurrentPage
+        public MainWindowViewModel(IndexEditViewModel indexmVm, EscallationInputViewModel escallationInputVm, INavigationService navigationService)
         {
-            get { return _currentPage; }
-            set
-            {
-                _currentPage = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public MainWindowViewModel(IndexEditViewModel indexmVm, EscallationInputViewModel escallationInputVm)
-        {
+            NavigationService = navigationService;
+            NavigationService.Navigated += OnNavigated;
             EscallationInputViewModel = escallationInputVm;
             IndexEditViewModel = indexmVm;
             GoToEscallationInputPage = new RelayCommand(obj =>
             {
-                CurrentPage = EscallationInputViewModel;
+                NavigationService.Navigate<EscallationInputViewModel>();
             });
             GoToIndexEditPage = new RelayCommand(obj =>
             {
-                CurrentPage = IndexEditViewModel;
+                NavigationService.Navigate<IndexEditViewModel>();
             });
-            CurrentPage = EscallationInputViewModel;
+            NavigationService.Navigate<EscallationInputViewModel>();
+        }
+
+        private void OnNavigated(object? sender, EventArgs e)
+        {
+            OnPropertyChanged(nameof(CurrentPage));
         }
     }
 }

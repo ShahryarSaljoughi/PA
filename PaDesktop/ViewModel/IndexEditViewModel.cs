@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PaDesktop.ViewModel
 {
-    public class IndexEditViewModel: ObservableObject
+    public class IndexEditViewModel: Core.ViewModelBase
     {
         public IndexEditViewModel()
         {

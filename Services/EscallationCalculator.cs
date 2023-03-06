@@ -13,10 +13,19 @@ namespace Services
 {
     public class EscallationCalculator : IEscallationCalculator
     {
+        private EscallationInputDto escallationInputDto;
+
+        public EscallationInputDto EscallationInputDto
+        {
+            get { return escallationInputDto; }
+            private set { escallationInputDto = value; }
+        }
+
         public PaDbContext Db { get; set; }
         public EscallationCalculator(PaDbContext db)
         {
             Db = db;
+            escallationInputDto = new EscallationInputDto();
         }
         public async Task CalculateAsync(EscallationInputDto dto)
         {

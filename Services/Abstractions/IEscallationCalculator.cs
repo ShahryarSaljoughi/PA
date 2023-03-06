@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Services.Dto;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace Services.Abstractions
 {
     public interface IEscallationCalculator
     {
+        EscallationInputDto EscallationInputDto { get; }
     }
 }

@@ -22,6 +22,11 @@
         <DataTemplate DataType="{x:Type viewModel:IndexEditViewModel}">
             <view:IndexEdit></view:IndexEdit>
         </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:PriceInputViewModel}">
+            <view:PriceInputPage></view:PriceInputPage>
+        </DataTemplate>
+        
         <Style TargetType="Label" >
             <Style.Setters>
                 <Setter Property="FontFamily" Value="/Assets/Font/IRANSans" />
@@ -48,14 +53,7 @@
 
             <!--page container-->
             <Grid   Grid.Column="1">
-                <ContentControl Content="{Binding CurrentPage}">
-                    <!--<ContentControl.ContentTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="Hello" />
-                        </DataTemplate>
-                    </ContentControl.ContentTemplate>-->
-                </ContentControl>
-                <!--<TextBlock Width="auto" FontSize="20" Text="{Binding Path=CurrentPage}" />-->
+                <ContentControl Content="{Binding CurrentPage}" />
             </Grid>
         </ui:NavigationView>
 

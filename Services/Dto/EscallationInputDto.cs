@@ -10,10 +10,10 @@ namespace Services.Dto
     public class EscallationInputDto
     {
         public TimeBox? BaseTimeBox { get; set; }
-        public decimal Coefficient { get; set; } // 0.95 or 0.975 or 1
-        public PersianDate? PreviousStatementTime { get; set; }
-        public PersianDate? CurrentStateMentTime { get; set; }
-        public PersianDate? LandSurrenderTime { get; set; }
+        public double Coefficient { get; set; } // 0.95 or 0.975 or 1
+        public DateTime? PreviousStatementTime { get; set; }
+        public DateTime? CurrentStateMentTime { get; set; }
+        public DateTime? LandSurrenderTime { get; set; }
         public List<PricesInputDto>? PreviousPrices { get; set; }
         public List<PricesInputDto>? CurrentPrices { get; set; }
     }

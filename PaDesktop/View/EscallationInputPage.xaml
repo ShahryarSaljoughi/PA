@@ -11,19 +11,21 @@
         xmlns:persianDateControls="clr-namespace:Mohsen.PersianDateControls;assembly=Mohsen.PersianDateControls" xmlns:local1="clr-namespace:PaDesktop.ViewModel"
         mc:Ignorable="d"
         Height="auto" Width="auto"
-        Loaded="EscallationInputPage_Loaded">
+        Loaded="EscallationInputPage_Loaded"
+        Name="UserControl">
 
     <Grid 
         VerticalAlignment="Top" 
         HorizontalAlignment="Left"
         FlowDirection="RightToLeft" 
         MaxWidth="900"
-        Name="panel">
+        Name="panel"
+        DataContext="{Binding EscallationInputDto}">
         <Grid.Resources>
+            <converters:DateTimeToPersianDateConverter x:Key="dateToPersianDateConverter"/>
             <Style TargetType="StackPanel">
                 <Setter Property="Margin" Value="5 20 5 10"></Setter>
             </Style>
-
         </Grid.Resources>
 
         <Grid.RowDefinitions>
@@ -41,37 +43,41 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="0">
-            <Label Grid.Row="0" Margin="10 10 50 10" >تاریخ تحویل زمین یا صورت وضعیت قبلی</Label>
-            <persianDateControls:PersianDatePicker Height="Auto" Grid.Row="1" />
+        <StackPanel Orientation="Horizontal" Grid.Row="0" >
+            <Label Margin="10 10 128 10" >تاریخ صورت وضعیت فعلی</Label>
+            <persianDateControls:PersianDatePicker  
+                SelectedDate="{Binding CurrentStateMentTime, Converter={StaticResource dateToPersianDateConverter}, Mode=TwoWay}"
+                Height="Auto" />
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="1" >
-            <Label Grid.Row="2" Margin="10 10 128 10" >تاریخ صورت وضعیت فعلی</Label>
-            <persianDateControls:PersianDatePicker  Height="Auto" Grid.Row="3" ></persianDateControls:PersianDatePicker>
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <Label Margin="10 10 50 10" >تاریخ تحویل زمین یا صورت وضعیت قبلی</Label>
+            <persianDateControls:PersianDatePicker 
+                SelectedDate="{Binding PreviousStatementTime, Converter={StaticResource dateToPersianDateConverter}, Mode=TwoWay}" 
+                Height="Auto" />
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="2">
-            
             <Label Grid.Row="4" Margin="10" >دوره مبنای قرارداد:</Label>
             <ComboBox 
                 Margin="133 0 0 0"
                 Grid.Row="5" 
                 MinWidth="170"
-                ItemsSource="{Binding AllTimeBoxes }" ></ComboBox>
+                DataContext="{Binding ElementName=UserControl, Path=DataContext}"
+                SelectedValue="{Binding EscallationInputDto.BaseTimeBox}"
+                ItemsSource="{Binding AllTimeBoxes }" />
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="3">
             <Label Grid.Row="6" Margin="10" >ضریب به کار رفته در ضریب تعدیل:</Label>
             <ComboBox 
-                DataContext ="{Binding }"
+                DataContext ="{Binding DataContext, ElementName=UserControl}"
                 ItemsSource="{Binding Path=Coefficients}"
+                SelectedValue="{Binding Path=EscallationInputDto.Coefficient}"
                 MinWidth="170"
                 Margin="40 0 0 0"
                 Grid.Row="7" ></ComboBox>
         </StackPanel>
-
-
 
         <DockPanel Margin="0 100 0 0" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
             <Button MaxWidth="100" MinHeight="40">
