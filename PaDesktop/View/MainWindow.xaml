@@ -26,7 +26,7 @@
         <DataTemplate DataType="{x:Type viewModel:PriceInputViewModel}">
             <view:PriceInputPage></view:PriceInputPage>
         </DataTemplate>
-        
+
         <Style TargetType="Label" >
             <Style.Setters>
                 <Setter Property="FontFamily" Value="/Assets/Font/IRANSans" />
@@ -52,9 +52,12 @@
             </ui:NavigationView.MenuItems>
 
             <!--page container-->
-            <Grid   Grid.Column="1">
-                <ContentControl Content="{Binding CurrentPage}" />
-            </Grid>
+
+            <Border Padding="40">
+                <Grid Grid.Column="1">
+                    <ContentControl Content="{Binding CurrentPage}" />
+                </Grid>
+            </Border>
         </ui:NavigationView>
 
     </Grid>

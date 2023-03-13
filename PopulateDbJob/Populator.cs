@@ -20,7 +20,7 @@ namespace PopulateDbJob
         private ILogger<Populator> Logger;
         public PaDbContext Db { get; set; }
         private IList<TimeBox> TimeBoxes = new List<TimeBox>();
-        private IDictionary<Guid, Subfield> Subfields = new Dictionary<Guid, Subfield>();
+        private IDictionary<(string Field, string SubfieldNo), Subfield> Subfields = new Dictionary<(string, string), Subfield>();
         public async Task PopulateAsync()
         {
             IList<RawRow> rawrows;
@@ -62,8 +62,32 @@ namespace PopulateDbJob
                          Value = row.Index
                      }).ToList()
                  }).ToList();
+            var subfieldcount = TimeBoxes.SelectMany(t => t.PAIndexes).Select(i => i.Subfield.Id).Distinct().Count();
+            UnifySubfields();
+            var subfieldcountAfterUnification = TimeBoxes.SelectMany(t => t.PAIndexes).Select(i => i.Subfield.Id).Distinct().Count();
             Db.TimeBoxes.AddRange(TimeBoxes);
             await Db.SaveChangesAsync();
+        }
+
+        private void UnifySubfields()
+        {
+            foreach (var timebox in TimeBoxes)
+            {
+                if (timebox.PAIndexes is null || !timebox.PAIndexes.Any()) continue;
+                foreach (var index in timebox.PAIndexes)
+                {
+                    if (index.Subfield is null) continue;
+                    var alreadyExists = Subfields.TryGetValue((index.Subfield.Field, index.Subfield.Number), out var subfield);
+                    if (alreadyExists && subfield is not null) // redundant condition!, just to silent the warnings :)
+                    {
+                        index.Subfield = subfield;
+                    }
+                    else
+                    {
+                        Subfields.Add((index.Subfield.Field, index.Subfield.Number), index.Subfield);
+                    }
+                }
+            }
         }
 
         private static IList<RawRow> ExtractRawData()

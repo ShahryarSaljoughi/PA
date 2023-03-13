@@ -80,8 +80,14 @@
         </StackPanel>
 
         <DockPanel Margin="0 100 0 0" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
-            <Button MaxWidth="100" MinHeight="40">
+            <Button 
+                MaxWidth="100" 
+                MinHeight="40" 
+                Command="{Binding GoToNextPageCommand}">
                 مرحله بعد
+                <Button.DataContext>
+                    <Binding ElementName="UserControl" Path="DataContext" ></Binding>
+                </Button.DataContext>
             </Button>
 
         </DockPanel>

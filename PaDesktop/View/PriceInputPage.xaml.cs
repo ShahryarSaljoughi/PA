@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Extensions.DependencyInjection;
+using PaDesktop.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,17 @@ namespace PaDesktop.View
     /// </summary>
     public partial class PriceInputPage : UserControl
     {
+        private PriceInputViewModel? ViewModel {get; set;}
         public PriceInputPage()
         {
             InitializeComponent();
+            DataContext = ViewModel = App.Current.Services.GetService<PriceInputViewModel>();
+            SubfieldsCombo.ItemsSource = ViewModel?.Subfields;
+        }
+
+        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            await ViewModel.PopulateDataAsync();
         }
     }
 }

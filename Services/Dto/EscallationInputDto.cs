@@ -17,10 +17,4 @@ namespace Services.Dto
         public List<PricesInputDto>? PreviousPrices { get; set; }
         public List<PricesInputDto>? CurrentPrices { get; set; }
     }
-
-    public class PricesInputDto
-    {
-        public Subfield? Subfield { get; set; }
-        public decimal Price { get; set; }
-    }
 }
