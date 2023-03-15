@@ -27,7 +27,6 @@ namespace PaDesktop.View
         {
             InitializeComponent();
             DataContext = ViewModel = App.Current.Services.GetService<PriceInputViewModel>();
-            SubfieldsCombo.ItemsSource = ViewModel?.Subfields;
         }
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)

@@ -3,32 +3,72 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             
              xmlns:local="clr-namespace:PaDesktop.View"
+             xmlns:vm="clr-namespace:PaDesktop.ViewModel"
              mc:Ignorable="d" 
              Name="MyUserControl"
              Loaded="UserControl_Loaded"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <UserControl.Resources>
+        <!-- see this: https://stackoverflow.com/questions/936304/binding-to-static-property -->
+        <vm:PriceInputRow x:Key="dummyRow"></vm:PriceInputRow>
+    </UserControl.Resources>
+    
+    <Grid FlowDirection="RightToLeft">
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
+        
+        
         <DataGrid 
             ItemsSource="{Binding Rows}"
             AutoGenerateColumns="False"
-            Grid.Row="0" 
+            CanUserAddRows="True"
+            CanUserDeleteRows="True"
+            Grid.Row="1" 
             FlowDirection="RightToLeft">
             <DataGrid.Columns>
-                <DataGridComboBoxColumn  DisplayMemberPath="Title" x:Name="SubfieldsCombo" Header="فصل" />
-                <DataGridTextColumn Header="مبلغ صورت وضعیت قبلی" />
-                <DataGridTextColumn Header="مبلغ صورت وضعیت فعلی" />
+                <DataGridComboBoxColumn
+                    SelectedItemBinding="{Binding Path=SelectedField, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  
+                    ItemsSource="{Binding Source={StaticResource dummyRow}, Path=AllFields}"
+                    
+                    Header="رشته" />
+                
+                <DataGridTemplateColumn Header="شماره فصل" >
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox 
+                                ItemsSource="{Binding Subfields, UpdateSourceTrigger=PropertyChanged}"
+                                SelectedValue="{Binding SelectedSubfield}"
+                                IsTextSearchEnabled="True"
+                                DisplayMemberPath="Number"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Content="{Binding Path=SelectedSubfield.Number, Mode=OneWay}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Binding="{Binding SelectedSubfield.Title}" Header="عنوان فصل"/>
+                <DataGridTextColumn Binding="{Binding PreviousPrice}" Header="مبلغ صورت وضعیت قبلی" />
+                <DataGridTextColumn Binding="{Binding CurrentPrice}" Header="مبلغ صورت وضعیت فعلی" />
             </DataGrid.Columns>
         </DataGrid>
         <Button 
             Command="{Binding AddRowCommand}" 
-            Grid.Row="1"
+            Grid.Row="2"
             Padding="10"
-            HorizontalAlignment="Left"
-            Content="سطر جدید"/> 
+            Margin="0 20 0 0"
+            HorizontalAlignment="Right"
+            Content="سطر جدید"/>
     </Grid>
 </UserControl>

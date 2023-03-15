@@ -36,6 +36,7 @@ namespace PaDesktop
             services.AddSingleton<Core.PaDbContext, Core.PaDbContext>();
             services.AddSingleton<Services.PaDbContext, Services.PaDbContext>();
             services.AddSingleton<ITimeBoxService, TimeBoxService>();
+            services.AddSingleton<ISubfieldService, SubfieldService>();
             services.AddSingleton<IEscallationCalculator, EscallationCalculator>();
             services.AddSingleton<INavigationService, NavigationService>();
             return services.BuildServiceProvider();

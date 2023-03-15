@@ -20,27 +20,36 @@ namespace PaDesktop.ViewModel
     public class PriceInputViewModel: ViewModelBase
     {
         private PaDbContext PaDb { get; set; }
+        private ISubfieldService SubfieldService { get; set; }
         public EscallationInputDto EscallationInputDto { get; set; }
-        public ObservableCollection<Subfield> Subfields { get; set; } = new ObservableCollection<Subfield>();
+        public ObservableCollection<SubFieldViewModel> Subfields { get; set; } = new ObservableCollection<SubFieldViewModel>();
+        public ObservableCollection<string> Fields { get; set; } = new ObservableCollection<string>();
         public ObservableCollection<PriceInputRow> Rows { get; set; }
         public ICommand AddRowCommand { get; set; }
-        public PriceInputViewModel(PaDbContext paDb)
+        public PriceInputViewModel(PaDbContext paDb, ISubfieldService subfieldService)
         {
             var calculator = App.Current.Services.GetService<IEscallationCalculator>() ?? throw new Exception("IoC not working");
             EscallationInputDto = calculator.EscallationInputDto;
             PaDb = paDb;
             Rows = new ObservableCollection<PriceInputRow>();
-            AddRowCommand = new RelayCommand(obj => AddRow());
+            AddRowCommand = new RelayCommand(obj => AddDataGridRow());
+            SubfieldService = subfieldService;
         }
         public async Task PopulateDataAsync()
         {
-            var subfields = await PaDb.Set<Subfield>().Take(10).ToListAsync();
+            var subfields = await SubfieldService.GetAllSubfieldsAsync();
             foreach (var subfield in subfields)
             {
-                Subfields.Add(subfield);
+                Subfields.Add(new SubFieldViewModel(subfield));
             }
+            var fields = await SubfieldService.GetAllFieldsAsync();
+            foreach (var field in fields)
+            {
+                Fields.Add(field);
+            }
+            await PriceInputRow.PopulateStaticDataAsync();
         }
-        public void AddRow()
+        public void AddDataGridRow()
         {
             Rows.Add(new PriceInputRow());
         }
