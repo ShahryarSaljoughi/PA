@@ -9,6 +9,7 @@ namespace Services.Abstractions
 {
     public interface IEscallationCalculator
     {
-        EscallationInputDto EscallationInputDto { get; }
+        EscallationInputDto EscalationInputDto { get; }
+        Task CalculateAsync();
     }
 }

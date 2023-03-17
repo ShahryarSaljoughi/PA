@@ -27,6 +27,10 @@
             <view:PriceInputPage></view:PriceInputPage>
         </DataTemplate>
 
+        <DataTemplate DataType="{x:Type viewModel:EscallationResultPageViewModel}">
+            <view:EscallationResultPage></view:EscallationResultPage>
+        </DataTemplate>
+
         <Style TargetType="Label" >
             <Style.Setters>
                 <Setter Property="FontFamily" Value="/Assets/Font/IRANSans" />

@@ -30,6 +30,9 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="pa.sqlite">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="shahkes 81-1401-end.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

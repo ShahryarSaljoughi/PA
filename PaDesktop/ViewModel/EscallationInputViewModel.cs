@@ -28,7 +28,7 @@ namespace PaDesktop.ViewModel
         public EscallationInputViewModel(INavigationService navigationService)
         {
             escallationCalculator = App.Current.Services.GetService<IEscallationCalculator>() ?? throw new Exception("IoC not working");
-            EscallationInputDto = escallationCalculator.EscallationInputDto;
+            EscallationInputDto = escallationCalculator.EscalationInputDto;
             NavigationService = navigationService;
             GoToNextPageCommand = new RelayCommand(obj => GoToNextPage());
         }

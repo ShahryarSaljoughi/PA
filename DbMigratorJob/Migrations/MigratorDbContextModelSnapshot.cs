@@ -21,6 +21,34 @@ namespace DbMigratorJob.Migrations
                 .HasAnnotation("Proxies:CheckEquality", false)
                 .HasAnnotation("Proxies:LazyLoading", true);
 
+            modelBuilder.Entity("DataModel.Model.Escalation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("BaseTimeBoxId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("Coefficient")
+                        .HasColumnType("REAL");
+
+                    b.Property<DateTime?>("CurrentStatementTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsCalculated")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime?>("PreviousStatementTime")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BaseTimeBoxId");
+
+                    b.ToTable("Escalation");
+                });
+
             modelBuilder.Entity("DataModel.Model.EscalationItem", b =>
                 {
                     b.Property<Guid>("Id")
@@ -30,6 +58,12 @@ namespace DbMigratorJob.Migrations
                     b.Property<decimal>("CurrentPrice")
                         .HasColumnType("TEXT");
 
+                    b.Property<Guid>("EscallaionId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("EscallationId")
+                        .HasColumnType("TEXT");
+
                     b.Property<decimal>("PreviousPrice")
                         .HasColumnType("TEXT");
 
@@ -37,6 +71,8 @@ namespace DbMigratorJob.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("EscallationId");
 
                     b.HasIndex("SubfieldId");
 
@@ -49,12 +85,26 @@ namespace DbMigratorJob.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("EscalationItemId")
+                    b.Property<double>("EscalationCoefficient")
+                        .HasColumnType("REAL");
+
+                    b.Property<Guid>("EscalationItemId")
                         .HasColumnType("TEXT");
+
+                    b.Property<decimal>("EscalationPrice")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("WorkingTimeBoxId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<double>("WorkingTimeBoxIndex")
+                        .HasColumnType("REAL");
 
                     b.HasKey("Id");
 
                     b.HasIndex("EscalationItemId");
+
+                    b.HasIndex("WorkingTimeBoxId");
 
                     b.ToTable("EscalationItemRows");
                 });
@@ -132,20 +182,47 @@ namespace DbMigratorJob.Migrations
                     b.ToTable("TimeBoxes");
                 });
 
+            modelBuilder.Entity("DataModel.Model.Escalation", b =>
+                {
+                    b.HasOne("DataModel.Model.TimeBox", "BaseTimeBox")
+                        .WithMany()
+                        .HasForeignKey("BaseTimeBoxId");
+
+                    b.Navigation("BaseTimeBox");
+                });
+
             modelBuilder.Entity("DataModel.Model.EscalationItem", b =>
                 {
+                    b.HasOne("DataModel.Model.Escalation", "Escallation")
+                        .WithMany("Items")
+                        .HasForeignKey("EscallationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DataModel.Model.Subfield", "Subfield")
                         .WithMany()
                         .HasForeignKey("SubfieldId");
+
+                    b.Navigation("Escallation");
 
                     b.Navigation("Subfield");
                 });
 
             modelBuilder.Entity("DataModel.Model.EscalationItemRow", b =>
                 {
-                    b.HasOne("DataModel.Model.EscalationItem", null)
+                    b.HasOne("DataModel.Model.EscalationItem", "EscalationItem")
                         .WithMany("Rows")
-                        .HasForeignKey("EscalationItemId");
+                        .HasForeignKey("EscalationItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DataModel.Model.TimeBox", "WorkingTimeBox")
+                        .WithMany()
+                        .HasForeignKey("WorkingTimeBoxId");
+
+                    b.Navigation("EscalationItem");
+
+                    b.Navigation("WorkingTimeBox");
                 });
 
             modelBuilder.Entity("DataModel.Model.PAIndex", b =>
@@ -165,6 +242,11 @@ namespace DbMigratorJob.Migrations
                     b.Navigation("Subfield");
 
                     b.Navigation("TimeBox");
+                });
+
+            modelBuilder.Entity("DataModel.Model.Escalation", b =>
+                {
+                    b.Navigation("Items");
                 });
 
             modelBuilder.Entity("DataModel.Model.EscalationItem", b =>

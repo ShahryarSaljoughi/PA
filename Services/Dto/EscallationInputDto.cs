@@ -14,7 +14,6 @@ namespace Services.Dto
         public DateTime? PreviousStatementTime { get; set; }
         public DateTime? CurrentStateMentTime { get; set; }
         public DateTime? LandSurrenderTime { get; set; }
-        public List<PricesInputDto>? PreviousPrices { get; set; }
-        public List<PricesInputDto>? CurrentPrices { get; set; }
+        public List<PricesInputRowDto> Prices { get; } = new List<PricesInputRowDto> { };
     }
 }

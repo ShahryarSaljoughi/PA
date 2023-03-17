@@ -11,6 +11,7 @@ namespace DataModel.Model
         public virtual string? Month { get; set; }
         public virtual DateTime Start { get; set; }
         public virtual DateTime End { get; set; }
+        public int Duration => (End - Start).Days;
         public virtual IList<PAIndex>? PAIndexes { get; set; }
         public string Text => ToString();
 

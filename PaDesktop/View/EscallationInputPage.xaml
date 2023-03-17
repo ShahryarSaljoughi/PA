@@ -38,6 +38,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -49,15 +50,21 @@
                 SelectedDate="{Binding CurrentStateMentTime, Converter={StaticResource dateToPersianDateConverter}, Mode=TwoWay}"
                 Height="Auto" />
         </StackPanel>
+        <!--<StackPanel 
+            Orientation="Horizontal"
+            Grid.Row ="1">
+            <Label Content="صورت وضعیت فعلی، اولین صورت وضعیت مالی است."></Label>
+            <CheckBox FlowDirection="LeftToRight" ></CheckBox>
+        </StackPanel>-->
 
-        <StackPanel Orientation="Horizontal" Grid.Row="1">
+        <StackPanel Orientation="Horizontal" Grid.Row="2">
             <Label Margin="10 10 50 10" >تاریخ تحویل زمین یا صورت وضعیت قبلی</Label>
             <persianDateControls:PersianDatePicker 
                 SelectedDate="{Binding PreviousStatementTime, Converter={StaticResource dateToPersianDateConverter}, Mode=TwoWay}" 
                 Height="Auto" />
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="2">
+        <StackPanel Orientation="Horizontal" Grid.Row="3">
             <Label Grid.Row="4" Margin="10" >دوره مبنای قرارداد:</Label>
             <ComboBox 
                 Margin="133 0 0 0"
@@ -68,7 +75,7 @@
                 ItemsSource="{Binding AllTimeBoxes }" />
         </StackPanel>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="3">
+        <StackPanel Orientation="Horizontal" Grid.Row="4">
             <Label Grid.Row="6" Margin="10" >ضریب به کار رفته در ضریب تعدیل:</Label>
             <ComboBox 
                 DataContext ="{Binding DataContext, ElementName=UserControl}"
@@ -79,7 +86,7 @@
                 Grid.Row="7" ></ComboBox>
         </StackPanel>
 
-        <DockPanel Margin="0 100 0 0" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
+        <DockPanel Margin="0 100 0 0" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
             <Button 
                 MaxWidth="100" 
                 MinHeight="40" 

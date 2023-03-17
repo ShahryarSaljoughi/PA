@@ -13,32 +13,76 @@ namespace Services
 {
     public class EscallationCalculator : IEscallationCalculator
     {
+        private IIndexService IndexService { get; set; }
         private EscallationInputDto escallationInputDto;
-
-        public EscallationInputDto EscallationInputDto
+        private Escalation Escalation { get; set; }
+        public EscallationInputDto EscalationInputDto
         {
             get { return escallationInputDto; }
             private set { escallationInputDto = value; }
         }
-
         public PaDbContext Db { get; set; }
-        public EscallationCalculator(PaDbContext db)
+        public EscallationCalculator(PaDbContext db, IIndexService indexService)
         {
             Db = db;
+            IndexService = indexService;
             escallationInputDto = new EscallationInputDto();
         }
-        public async Task CalculateAsync(EscallationInputDto dto)
+        public async Task CalculateAsync()
         {
+            MapEscallationDtoToEntity();
+
+            var timeboxes = await GetWorkingTimeBoxesAsync();
+            foreach (var item in Escalation.Items)
+            {
+                foreach (var timebox in timeboxes)
+                {
+                    var workingIndex = await IndexService.GetIndexAsync(item.Subfield.Id, timebox.Id);
+                    var baseIndex = await IndexService.GetIndexAsync(item.Subfield.Id, Escalation.BaseTimeBox.Id);
+                    var escalationCoefficient = ((workingIndex / baseIndex) - 1) * Escalation.Coefficient;
+                    var row = new EscalationItemRow(item)
+                    {
+                        WorkingTimeBox = timebox,
+                        WorkingTimeBoxIndex = workingIndex,
+                        EscalationCoefficient = escalationCoefficient,
+                    };
+                    row.EscalationPrice = 
+                        (decimal)escalationCoefficient * item.PriceDifference * (decimal)row.WorkingProportion;
+                }
+            }
+            Escalation.IsCalculated = true;
+            Db.Add(Escalation);
+            await Db.SaveChangesAsync();
 
         }
 
-        private async Task<IEnumerable<TimeBox>> GetWorkingTimeBoxes(DateTime first, DateTime second)
+        private async Task<List<TimeBox>> GetWorkingTimeBoxesAsync()
         {
             var result = await Db.TimeBoxes
-                .Where(t => t.End > first && t.Start < second)
+                .Where(timebox => timebox.End > Escalation.PreviousStatementTime && timebox.Start < Escalation.CurrentStatementTime)
                 .ToListAsync();
 
             return result;
+        }
+
+        void MapEscallationDtoToEntity()
+        {
+            Escalation = new Escalation()
+            {
+                Id = Guid.NewGuid(),
+                BaseTimeBox = escallationInputDto.BaseTimeBox,
+                Coefficient = escallationInputDto.Coefficient,
+                CurrentStatementTime = escallationInputDto.CurrentStateMentTime,
+                PreviousStatementTime = escallationInputDto.PreviousStatementTime
+            };
+            var items = EscalationInputDto.Prices.Select(d => new EscalationItem(Escalation)
+            {
+                CurrentPrice = d.CurrentPrice,
+                PreviousPrice = d.PreviousPrice,
+                Subfield = d.Subfield,
+                Rows = new List<EscalationItemRow>()
+            }).ToList();
+            Escalation.Items.AddRange(items);
         }
     }
 }

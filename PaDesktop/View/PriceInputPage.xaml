@@ -12,23 +12,23 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
         <!-- see this: https://stackoverflow.com/questions/936304/binding-to-static-property -->
-        <vm:PriceInputRow x:Key="dummyRow"></vm:PriceInputRow>
+        <vm:PriceInputRowViewModel x:Key="dummyRow"></vm:PriceInputRowViewModel>
     </UserControl.Resources>
-    
+
     <Grid FlowDirection="RightToLeft">
         <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
-            <RowDefinition />
             <RowDefinition Height="auto" />
         </Grid.RowDefinitions>
-        
-        
+
+
         <DataGrid 
-            ItemsSource="{Binding Rows}"
+            ItemsSource="{Binding VMRows}"
             AutoGenerateColumns="False"
             CanUserAddRows="True"
             CanUserDeleteRows="True"
-            Grid.Row="1" 
+            Grid.Row="0" 
             FlowDirection="RightToLeft">
             <DataGrid.Columns>
                 <DataGridComboBoxColumn
@@ -36,7 +36,7 @@
                     ItemsSource="{Binding Source={StaticResource dummyRow}, Path=AllFields}"
                     
                     Header="رشته" />
-                
+
                 <DataGridTemplateColumn Header="شماره فصل" >
                     <DataGridTemplateColumn.CellEditingTemplate>
                         <DataTemplate>
@@ -65,10 +65,16 @@
         </DataGrid>
         <Button 
             Command="{Binding AddRowCommand}" 
-            Grid.Row="2"
+            Grid.Row="1"
             Padding="10"
             Margin="0 20 0 0"
             HorizontalAlignment="Right"
             Content="سطر جدید"/>
+        <Border Grid.Row="2">
+            <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0 20 0 0">
+                <Button Content="مرحله بعد" Margin="0 0 50 0" />
+                <Button Content="مرحله قبل" Command="{Binding GoPreviousPage}" />
+            </StackPanel>
+        </Border>
     </Grid>
 </UserControl>

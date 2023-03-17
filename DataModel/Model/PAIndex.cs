@@ -9,7 +9,9 @@ namespace DataModel.Model
     {
         public Guid Id { get; set; }
         public virtual double Value { get; set; }
+        public virtual Guid TimeBoxId { get; set; }
         public virtual TimeBox TimeBox { get; set; }
+        public virtual Guid SubfieldId { get; set; }
         public virtual Subfield Subfield { get; set; }
         public PAIndex(TimeBox timebox, Subfield subfield)
         {
