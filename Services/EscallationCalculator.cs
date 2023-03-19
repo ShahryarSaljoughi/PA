@@ -59,7 +59,7 @@ namespace Services
         private async Task<List<TimeBox>> GetWorkingTimeBoxesAsync()
         {
             var result = await Db.TimeBoxes
-                .Where(timebox => timebox.End > Escalation.PreviousStatementTime && timebox.Start < Escalation.CurrentStatementTime)
+                .Where(timebox => timebox.End >= Escalation.PreviousStatementTime && timebox.Start <= Escalation.CurrentStatementTime)
                 .ToListAsync();
 
             return result;
@@ -72,7 +72,7 @@ namespace Services
                 Id = Guid.NewGuid(),
                 BaseTimeBox = escallationInputDto.BaseTimeBox,
                 Coefficient = escallationInputDto.Coefficient,
-                CurrentStatementTime = escallationInputDto.CurrentStateMentTime,
+                CurrentStatementTime = escallationInputDto.CurrentStatementTime,
                 PreviousStatementTime = escallationInputDto.PreviousStatementTime
             };
             var items = EscalationInputDto.Prices.Select(d => new EscalationItem(Escalation)
@@ -80,7 +80,8 @@ namespace Services
                 CurrentPrice = d.CurrentPrice,
                 PreviousPrice = d.PreviousPrice,
                 Subfield = d.Subfield,
-                Rows = new List<EscalationItemRow>()
+                Rows = new List<EscalationItemRow>(),
+                EscalationId = Escalation.Id
             }).ToList();
             Escalation.Items.AddRange(items);
         }

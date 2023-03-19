@@ -21,14 +21,14 @@ namespace DataModel.Model
         public virtual decimal CurrentPrice { get; set; } = default;
         public virtual Subfield? Subfield { get; set; }
         public virtual decimal PriceDifference => CurrentPrice - PreviousPrice;
-        public virtual Guid EscallaionId { get; set; }
-        public virtual Escalation Escallation {get; private set;}
+        public virtual Guid EscalationId { get; set; }
+        public virtual Escalation Escalation {get; private set;}
         
         public EscalationItem(Escalation escallation)
         {
             Id = Guid.NewGuid();
             Rows = new List<EscalationItemRow>();
-            Escallation = escallation;
+            Escalation = escallation;
         }
         /// <summary>
         /// don't use this

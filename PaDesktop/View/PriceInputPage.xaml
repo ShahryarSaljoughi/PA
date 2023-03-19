@@ -72,7 +72,7 @@
             Content="سطر جدید"/>
         <Border Grid.Row="2">
             <StackPanel Orientation="Horizontal" FlowDirection="LeftToRight" Margin="0 20 0 0">
-                <Button Content="مرحله بعد" Margin="0 0 50 0" />
+                <Button Content="مرحله بعد" Command="{Binding GoNextPage}" Margin="0 0 50 0" />
                 <Button Content="مرحله قبل" Command="{Binding GoPreviousPage}" />
             </StackPanel>
         </Border>

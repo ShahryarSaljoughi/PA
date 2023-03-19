@@ -47,7 +47,7 @@
         <StackPanel Orientation="Horizontal" Grid.Row="0" >
             <Label Margin="10 10 128 10" >تاریخ صورت وضعیت فعلی</Label>
             <persianDateControls:PersianDatePicker  
-                SelectedDate="{Binding CurrentStateMentTime, Converter={StaticResource dateToPersianDateConverter}, Mode=TwoWay}"
+                SelectedDate="{Binding CurrentStatementTime, Converter={StaticResource dateToPersianDateConverter}, Mode=TwoWay}"
                 Height="Auto" />
         </StackPanel>
         <!--<StackPanel 

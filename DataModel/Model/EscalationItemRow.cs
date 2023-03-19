@@ -43,15 +43,15 @@ namespace DataModel.Model
 
         private double GetWorkingProportion()
         {
-            var start = WorkingTimeBox?.Start > EscalationItem.Escallation.PreviousStatementTime
+            var start = WorkingTimeBox?.Start > EscalationItem.Escalation.PreviousStatementTime
                 ? WorkingTimeBox.Start
-                : EscalationItem.Escallation.PreviousStatementTime;
-            var end = WorkingTimeBox?.End < EscalationItem.Escallation.CurrentStatementTime
+                : EscalationItem.Escalation.PreviousStatementTime;
+            var end = WorkingTimeBox?.End < EscalationItem.Escalation.CurrentStatementTime
                 ? WorkingTimeBox?.End
-                : EscalationItem.Escallation.CurrentStatementTime;
+                : EscalationItem.Escalation.CurrentStatementTime;
             var result =
                  (double)(end - start).Value.Days /
-                (EscalationItem.Escallation.CurrentStatementTime - EscalationItem.Escallation.PreviousStatementTime).Value.Days;
+                (EscalationItem.Escalation.CurrentStatementTime - EscalationItem.Escalation.PreviousStatementTime).Value.Days;
             return result;
         }
 

@@ -58,10 +58,7 @@ namespace DbMigratorJob.Migrations
                     b.Property<decimal>("CurrentPrice")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("EscallaionId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("EscallationId")
+                    b.Property<Guid>("EscalationId")
                         .HasColumnType("TEXT");
 
                     b.Property<decimal>("PreviousPrice")
@@ -72,7 +69,7 @@ namespace DbMigratorJob.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EscallationId");
+                    b.HasIndex("EscalationId");
 
                     b.HasIndex("SubfieldId");
 
@@ -193,9 +190,9 @@ namespace DbMigratorJob.Migrations
 
             modelBuilder.Entity("DataModel.Model.EscalationItem", b =>
                 {
-                    b.HasOne("DataModel.Model.Escalation", "Escallation")
+                    b.HasOne("DataModel.Model.Escalation", "Escalation")
                         .WithMany("Items")
-                        .HasForeignKey("EscallationId")
+                        .HasForeignKey("EscalationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -203,7 +200,7 @@ namespace DbMigratorJob.Migrations
                         .WithMany()
                         .HasForeignKey("SubfieldId");
 
-                    b.Navigation("Escallation");
+                    b.Navigation("Escalation");
 
                     b.Navigation("Subfield");
                 });

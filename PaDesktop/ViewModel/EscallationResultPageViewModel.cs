@@ -16,9 +16,9 @@ namespace PaDesktop.ViewModel
             Calculator = calculator;
         }
 
-        void Calculate()
+        public async Task CalculateAsync()
         {
-            
+            await Calculator.CalculateAsync();
         }
     }
 }
