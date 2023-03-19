@@ -39,6 +39,9 @@ namespace DbMigratorJob.Migrations
                     b.Property<bool>("IsCalculated")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool?>("IsInterim")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime?>("PreviousStatementTime")
                         .HasColumnType("TEXT");
 

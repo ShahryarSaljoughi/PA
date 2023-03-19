@@ -23,7 +23,8 @@ namespace DataModel.Model
         public virtual decimal PriceDifference => CurrentPrice - PreviousPrice;
         public virtual Guid EscalationId { get; set; }
         public virtual Escalation Escalation {get; private set;}
-        
+        public virtual double BaseIndex { get; set; }
+
         public EscalationItem(Escalation escallation)
         {
             Id = Guid.NewGuid();

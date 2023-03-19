@@ -41,6 +41,7 @@ namespace PaDesktop
             services.AddSingleton<IIndexService, IndexService>();
             services.AddSingleton<IEscallationCalculator, EscallationCalculator>();
             services.AddSingleton<INavigationService, NavigationService>();
+            services.AddScoped<>();
             return services.BuildServiceProvider();
         }
 

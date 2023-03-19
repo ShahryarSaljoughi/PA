@@ -32,8 +32,9 @@ namespace PaDesktop.View
 
         public EscallationResultPage()
         {
-            InitializeComponent();
             ViewModel = App.Current.Services.GetService<EscallationResultPageViewModel>(); 
+            this.DataContext = ViewModel;
+            InitializeComponent();
         }
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)

@@ -13,6 +13,7 @@ namespace DataModel.Model
         /// دوره کارکرد
         /// </summary>
         public virtual TimeBox? WorkingTimeBox { get; set; }
+        
         /// <summary>
         /// نسبت دوره کارکرد
         /// </summary>

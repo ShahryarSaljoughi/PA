@@ -13,5 +13,9 @@ namespace DataModel.Model
         public virtual DateTime? CurrentStatementTime { get; set; }
         public virtual List<EscalationItem> Items { get; set; } = new List<EscalationItem>();
         public virtual bool IsCalculated { get; set; } = false;
+        /// <summary>
+        /// علی الحساب است؟ یا قطعی است؟
+        /// </summary>
+        public virtual bool? IsInterim { get; set; } = false;
     }
 }

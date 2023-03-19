@@ -1,4 +1,5 @@
-﻿using Services.Dto;
+﻿using DataModel.Model;
+using Services.Dto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,6 @@ namespace Services.Abstractions
     public interface IEscallationCalculator
     {
         EscallationInputDto EscalationInputDto { get; }
-        Task CalculateAsync();
+        Task<Escalation> CalculateAsync();
     }
 }

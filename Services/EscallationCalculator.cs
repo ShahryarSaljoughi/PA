@@ -28,17 +28,18 @@ namespace Services
             IndexService = indexService;
             escallationInputDto = new EscallationInputDto();
         }
-        public async Task CalculateAsync()
+        public async Task<Escalation> CalculateAsync()
         {
             MapEscallationDtoToEntity();
 
             var timeboxes = await GetWorkingTimeBoxesAsync();
             foreach (var item in Escalation.Items)
             {
+                var baseIndex = await IndexService.GetIndexAsync(item.Subfield.Id, Escalation.BaseTimeBox.Id);
+                item.BaseIndex = baseIndex;
                 foreach (var timebox in timeboxes)
                 {
                     var workingIndex = await IndexService.GetIndexAsync(item.Subfield.Id, timebox.Id);
-                    var baseIndex = await IndexService.GetIndexAsync(item.Subfield.Id, Escalation.BaseTimeBox.Id);
                     var escalationCoefficient = ((workingIndex / baseIndex) - 1) * Escalation.Coefficient;
                     var row = new EscalationItemRow(item)
                     {
@@ -46,13 +47,15 @@ namespace Services
                         WorkingTimeBoxIndex = workingIndex,
                         EscalationCoefficient = escalationCoefficient,
                     };
-                    row.EscalationPrice = 
+                    row.EscalationPrice =
                         (decimal)escalationCoefficient * item.PriceDifference * (decimal)row.WorkingProportion;
+                    item.Rows.Add(row);
                 }
             }
             Escalation.IsCalculated = true;
             Db.Add(Escalation);
             await Db.SaveChangesAsync();
+            return Escalation;
 
         }
 

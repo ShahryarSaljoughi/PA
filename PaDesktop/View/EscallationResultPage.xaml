@@ -7,7 +7,76 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Loaded="UserControl_Loaded">
-    <Grid>
-        <Label VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="40" >EscallationResultPage</Label>
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ScrollViewer Grid.Row="0" HorizontalScrollBarVisibility="Auto">
+            <DataGrid
+            ItemsSource="{Binding Rows}"
+            FlowDirection="RightToLeft"
+            AutoGenerateColumns="False"
+            CanUserAddRows="False"
+            CanUserDeleteRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn
+                        Binding="{Binding WorkingTimeBox.SolarYear}"
+                        Header="سال" />
+
+                    <DataGridTextColumn
+                        Binding="{Binding WorkingTimeBox}"
+                        Header="دوره کارکرد" />
+
+                    <DataGridTextColumn
+                        Binding="{Binding EscalationItem.Subfield.Field}"
+                        Header="رشته" />
+
+                    <DataGridTextColumn
+                        Binding="{Binding EscalationItem.Subfield.Number}"
+                        Header="فصل" />
+
+                    <DataGridTextColumn
+                        Binding="{Binding EscalationItem.CurrentPrice}"
+                        Header="مبلغ صورت وضعیت فعلی" />
+
+                    <DataGridTextColumn                    
+                        Binding="{Binding EscalationItem.PreviousPrice}"
+                        Header="مبلغ صورت وضعیت قبلی" />
+
+                    <DataGridTextColumn
+                        Binding="{Binding EscalationItem.PriceDifference}"
+                        Header="مبلغ مابه التفاوت دو صورت وضعیت" />
+
+                    <DataGridTextColumn
+                        Binding="{Binding WorkingProportion}"
+                        Header="نسبت مدت کارکرد در دوره به مدت کارکرد" />
+
+                    <DataGridTextColumn
+                        Binding="{Binding EscalationItem.BaseIndex}"
+                        Header="شاخص مبنا" />
+
+                    <DataGridTextColumn
+                        Binding="{Binding WorkingTimeBoxIndex}"
+                        Header="شاخص دوره کارکرد" />
+
+                    <DataGridTextColumn
+                        Binding="{Binding EscalationCoefficient}"
+                        Header="ضریب تعدیل" />
+
+                    <DataGridTextColumn
+                        Binding="{Binding EscalationPrice}"
+                        Header="مبلغ تعدیل" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </ScrollViewer>
+        <StackPanel Grid.Row="1" Orientation="Vertical">
+            <Border>
+                <Button Command="{Binding ExportExcel}" MinWidth="100">خروجی اکسل</Button>
+            </Border>
+            <Border  Margin="0 20 0 0">
+                <Button Command="{Binding GoPreviousPage}" MinWidth="100">مرحله قبل</Button>
+            </Border>
+        </StackPanel>
     </Grid>
 </UserControl>
