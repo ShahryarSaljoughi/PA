@@ -9,6 +9,6 @@ namespace Services.Abstractions
 {
     public interface IExcelExportService
     {
-        Task Export(string path, Escalation escalation);
+        Task ExportAsync(string path, Escalation escalation);
     }
 }

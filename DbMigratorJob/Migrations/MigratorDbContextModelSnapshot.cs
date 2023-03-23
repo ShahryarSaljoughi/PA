@@ -58,6 +58,9 @@ namespace DbMigratorJob.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<double>("BaseIndex")
+                        .HasColumnType("REAL");
+
                     b.Property<decimal>("CurrentPrice")
                         .HasColumnType("TEXT");
 

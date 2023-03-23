@@ -16,18 +16,20 @@ namespace PaDesktop.ViewModel
     {
         private IEscallationCalculator Calculator { get; set; }
         private INavigationService NavigationService { get; set; }
+        public IExcelExportService ExcelService { get; }
         public Escalation? Escalation { get; private set; }
         public ObservableCollection<EscalationItemRow> Rows { get; set; } = new ObservableCollection<EscalationItemRow>();
         public RelayCommand GoPreviousPage { get; set; }
-        public RelayCommand ExportExcelOutput { get; set; }
-        public EscallationResultPageViewModel(IEscallationCalculator calculator, INavigationService nav) 
+        //public RelayCommand ExportExcelOutput { get; set; }
+        public EscallationResultPageViewModel(IEscallationCalculator calculator, INavigationService nav, IExcelExportService excelService) 
         { 
             Calculator = calculator;
             NavigationService = nav;
+            ExcelService = excelService;
             GoPreviousPage = new RelayCommand(obj => NavigationService.Navigate<PriceInputViewModel>());
-            ExportExcelOutput = new RelayCommand(obj => {
-
-            });
+            //ExportExcelOutput = new RelayCommand(async obj => {
+            //    await ExportExcel();
+            //});
         }
 
         public async Task CalculateAsync()
@@ -36,9 +38,9 @@ namespace PaDesktop.ViewModel
             var rows = Escalation.Items.SelectMany(i => i.Rows).ToList();
             this.Rows.AddRange(rows);
         }
-        public async Task ExportExcel()
+        public async Task ExportExcel(string path)
         {
-
+            await ExcelService.ExportAsync(path, Escalation);
         }
     }
 }

@@ -72,7 +72,7 @@
         </ScrollViewer>
         <StackPanel Grid.Row="1" Orientation="Vertical">
             <Border>
-                <Button Command="{Binding ExportExcel}" MinWidth="100">خروجی اکسل</Button>
+                <Button Click="Button_Click" MinWidth="100">خروجی اکسل</Button>
             </Border>
             <Border  Margin="0 20 0 0">
                 <Button Command="{Binding GoPreviousPage}" MinWidth="100">مرحله قبل</Button>

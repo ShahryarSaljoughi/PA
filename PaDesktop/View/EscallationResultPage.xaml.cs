@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Win32;
 using PaDesktop.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -40,6 +41,13 @@ namespace PaDesktop.View
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             await ViewModel.CalculateAsync();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.ShowDialog();
+            ViewModel.ExportExcel(saveFileDialog.FileName);
         }
     }
 }
