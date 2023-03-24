@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using PaDesktop.Core;
 using PaDesktop.Service;
+using PaDesktop.View;
 using Services.Abstractions;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ using System.Windows.Input;
 
 namespace PaDesktop.ViewModel
 {
-    public class MainWindowViewModel : Core.ViewModelBase
+    public class MainWindowViewModel : ViewModelBase
 
     {
         private INavigationService NavigationService { get; set; }
@@ -25,7 +26,6 @@ namespace PaDesktop.ViewModel
         public EscallationInputViewModel EscallationInputViewModel { get; set; }
         public IndexEditViewModel IndexEditViewModel { get; set; }
         public ICommand GoToEscallationInputPage { get; set; }
-        public ICommand GoToIndexEditPage { get; set; }
         public ViewModelBase CurrentPage => NavigationService.CurrentPage;
 
         public MainWindowViewModel(IndexEditViewModel indexmVm, EscallationInputViewModel escallationInputVm, INavigationService navigationService)
@@ -38,10 +38,6 @@ namespace PaDesktop.ViewModel
             {
                 NavigationService.Navigate<EscallationInputViewModel>();
             });
-            GoToIndexEditPage = new RelayCommand(obj =>
-            {
-                NavigationService.Navigate<IndexEditViewModel>();
-            });
             NavigationService.Navigate<EscallationInputViewModel>();
         }
 
@@ -49,5 +45,6 @@ namespace PaDesktop.ViewModel
         {
             OnPropertyChanged(nameof(CurrentPage));
         }
+
     }
 }

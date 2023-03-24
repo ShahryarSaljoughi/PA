@@ -17,9 +17,6 @@ using System.Windows.Shapes;
 
 namespace PaDesktop.View
 {
-    /// <summary>
-    /// Interaction logic for PriceInputPage.xaml
-    /// </summary>
     public partial class PriceInputPage : UserControl
     {
         private PriceInputViewModel? ViewModel {get; set;}

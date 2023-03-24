@@ -30,8 +30,9 @@ namespace PaDesktop
             var services = new ServiceCollection();
             services.AddTransient<MainWindow>();
             services.AddSingleton<MainWindowViewModel>();
-            services.AddSingleton<EscallationInputViewModel>();
+            services.AddTransient<IndexEditWindow>();
             services.AddSingleton<IndexEditViewModel>();
+            services.AddSingleton<EscallationInputViewModel>();
             services.AddSingleton<PriceInputViewModel>();
             services.AddSingleton<EscallationResultPageViewModel>();
             services.AddSingleton<Core.PaDbContext, Core.PaDbContext>();

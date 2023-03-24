@@ -19,9 +19,9 @@
             <view:EscallationInputPage></view:EscallationInputPage>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type viewModel:IndexEditViewModel}">
+        <!--<DataTemplate DataType="{x:Type viewModel:IndexEditViewModel}">
             <view:IndexEdit></view:IndexEdit>
-        </DataTemplate>
+        </DataTemplate>-->
 
         <DataTemplate DataType="{x:Type viewModel:PriceInputViewModel}">
             <view:PriceInputPage></view:PriceInputPage>

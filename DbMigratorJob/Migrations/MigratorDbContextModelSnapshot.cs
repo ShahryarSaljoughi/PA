@@ -168,6 +168,9 @@ namespace DbMigratorJob.Migrations
                     b.Property<DateTime>("End")
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsInterim")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Month")
                         .HasColumnType("TEXT");
 

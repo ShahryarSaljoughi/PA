@@ -30,10 +30,11 @@ namespace Services
             //}
             SaveFileAsync(workbook, path);
         }
-        private void WriteHeaders(IXLWorksheet sheet)
+        private int WriteHeaders(IXLWorksheet sheet)
         {
             sheet.Cell("A1").Value = "دوره کارکرد";
             sheet.Range("A1:B2").Row(1).Merge();
+            return 7;
         }
         /// <summary>
         /// returns row number up to where has been used

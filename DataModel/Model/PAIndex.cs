@@ -17,6 +17,7 @@ namespace DataModel.Model
         {
             TimeBox = timebox;
             Subfield = subfield;
+            Id = Guid.NewGuid();
         }
 
         /// <summary>
