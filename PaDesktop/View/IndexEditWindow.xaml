@@ -61,8 +61,8 @@
                     </DataGrid.Columns>
                 </DataGrid>
                 <StackPanel HorizontalAlignment="Center" Grid.Row="1"  Orientation="Horizontal" Margin="0 20 0 0" >
-                    <Button Command="{Binding}"  MinWidth="80" Margin="0 0 20 10" Content="شاخص جدید" />
-                    <Button Click="RemoveIndexClicked" MinWidth="80" Margin="0 0 20 10" Content="حذف شاخص" />
+                    <Button IsEnabled="{Binding IsReadyToAddIndex}" Click="NewIndexClicked"  Command="{Binding NewIndexCommand}"  MinWidth="80" Margin="0 0 20 10" Content="شاخص جدید" />
+                    <Button IsEnabled="{Binding IsReadyToDeleteIndex}" Click="RemoveIndexClicked" MinWidth="80" Margin="0 0 20 10" Content="حذف شاخص" />
                     <Button Command="{Binding SaveIndexChangesCommand}"  MinWidth="80" Margin="0 0 0 10" Content=" ذخیره تغیرات" />
                     <!--<Button MinWidth="80"  Margin="20 0 0 10" ToolTip="اگر برای محاسبات تعدیل، نیاز به شاخص‌های دوره‌ای دارید که هنوز شاخص‌هایش توسط دولت اعلام نشده است، میتوانید شاخص‌های دوره قبل را به طور موقت استفاده کنید" Content="کپی از دوره‌دیگر" />-->
                 </StackPanel>

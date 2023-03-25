@@ -14,5 +14,6 @@ namespace Services.Abstractions
         Task DeleteIndexAsync(PAIndex selectedIndex);
         Task<double> GetIndexAsync(Guid SubfieldId, Guid TimeboxId);
         Task SaveIndexesAsync(List<PAIndex> paIndices);
+        Task SaveNewIndex(PAIndex index);
     }
 }

@@ -20,6 +20,11 @@ namespace DataModel.Model
         /// رشته
         /// </summary>
         public virtual string Field { get; set; }
+        public string Text => $"فصل {Number} - {Title}";
+        public override string ToString()
+        {
+            return Text;
+        }
 
     }
 }

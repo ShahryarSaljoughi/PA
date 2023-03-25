@@ -16,20 +16,44 @@ namespace PaDesktop.ViewModel
 {
     public class IndexEditViewModel : ViewModelBase
     {
+        private PAIndex? selectedIndex;
+        private TimeBox? selectedTimeBox;
+
         private List<PAIndex> ModifiedIndexes { get; } = new List<PAIndex>();
+        public bool IsReadyToAddIndex => SelectedTimeBox != null;
+        public bool IsReadyToDeleteIndex => SelectedIndex != null;
+        public List<PAIndex> ToBeAddedIndexes { get; } = new List<PAIndex>();
         public ObservableCollection<TimeBox> TimeBoxes { get; set; } = new ObservableCollection<TimeBox>();
-        public TimeBox? SelectedTimeBox { get; set; }
-        public PAIndex? SelectedIndex { get; set; }
+        public TimeBox? SelectedTimeBox 
+        { 
+            get => selectedTimeBox; 
+            set 
+            { 
+                selectedTimeBox = value; 
+                OnPropertyChanged(nameof(IsReadyToAddIndex));
+            } 
+        }
+        public PAIndex? SelectedIndex
+        {
+            get => selectedIndex;
+            set
+            {
+                selectedIndex = value;
+                OnPropertyChanged(nameof(IsReadyToDeleteIndex));
+            }
+        }
         public IIndexService IndexService { get; }
         public ObservableCollection<PAIndex> Indexes { get; set; } = new ObservableCollection<PAIndex>();
         public string IndexGroupHeader => string.Join(" ", "شاخص‌ها", SelectedTimeBox?.Text);
         public ICommand SaveIndexChangesCommand { get; }
+        public ICommand NewIndexCommand { get; }
         public ITimeBoxService TimeBoxService { get; }
         public IndexEditViewModel(ITimeBoxService timeBoxService, IIndexService indexService)
         {
             TimeBoxService = timeBoxService;
             IndexService = indexService;
             SaveIndexChangesCommand = new RelayCommand(async _ => await SaveIndexChangesAsync());
+            NewIndexCommand = new RelayCommand(_ => { });
         }
 
         public async Task PopulateDataAsync()
@@ -85,13 +109,19 @@ namespace PaDesktop.ViewModel
             {
                 Indexes.Remove(SelectedIndex);
             }
-            
+
         }
         internal void OnIndexChanged(PAIndex editedIndex)
         {
             ModifiedIndexes.Add(editedIndex);
         }
-
+        internal async Task AddIndexAsync(PAIndex? newIndex)
+        {
+            if (newIndex == null) { return; }
+            await IndexService.SaveNewIndex(newIndex);
+            Indexes.Add(newIndex);
+            
+        }
         private void SetStartEndDates(TimeBox timebox)
         {
             var startMonth = 1 + 3 * (timebox.ThreeMonthNo - 1);
@@ -100,7 +130,6 @@ namespace PaDesktop.ViewModel
             timebox.Start = start;
             timebox.End = end;
         }
-
         private async Task SetInterimIndexesAsync(TimeBox timebox)
         {
             var lastTimebox = await TimeBoxService.GetLastNonInterimTimeboxAsync();

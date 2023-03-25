@@ -50,5 +50,10 @@ namespace Services
             });
             await Db.SaveChangesAsync();
         }
+        public async Task SaveNewIndex(PAIndex index)
+        {
+            Db.Set<PAIndex>().Add(index);
+            await Db.SaveChangesAsync();
+        }
     }
 }

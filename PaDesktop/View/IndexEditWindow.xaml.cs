@@ -30,7 +30,6 @@ namespace PaDesktop.View
         public IndexEditWindow()
         {
             InitializeComponent();
-
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
@@ -52,8 +51,6 @@ namespace PaDesktop.View
             {
                 await ViewModel.SaveTimeBoxAsync(dialog.ViewModel);
             }
-
-
         }
 
         private async void DeleteTimeboxClicked(object sender, RoutedEventArgs e)
@@ -76,6 +73,17 @@ namespace PaDesktop.View
             if (e.EditAction != DataGridEditAction.Commit) return;
             PAIndex editedIndex = (PAIndex)e.Row.Item;
             ViewModel.OnIndexChanged(editedIndex);
+        }
+
+        private async void NewIndexClicked(object sender, RoutedEventArgs e)
+        {
+            var dialogVm = new NewIndexDialogViewModel(ViewModel.SelectedTimeBox);
+            var dialog = new NewIndexContentDialog(dialogVm);
+            await dialogVm.InitializeAsync();
+            var result = await dialog.ShowAsync(ContentDialogPlacement.InPlace);
+            if (result != ContentDialogResult.Primary) { return; }
+            var newIndex = dialogVm.CreateIndex();
+            await ViewModel.AddIndexAsync(newIndex);
         }
     }
 }

@@ -1,0 +1,45 @@
+﻿<ui:ContentDialog
+    x:Class="PaDesktop.View.NewIndexContentDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.modernwpf.com/2019"
+    
+    xmlns:viewModel="clr-namespace:PaDesktop.ViewModel"
+    xmlns:view="clr-namespace:PaDesktop.View" 
+    xmlns:persianDateControls="clr-namespace:Mohsen.PersianDateControls;assembly=Mohsen.PersianDateControls"
+    xmlns:converters="clr-namespace:PaDesktop.Converter" xmlns:system="clr-namespace:System;assembly=netstandard"
+    mc:Ignorable="d"
+    d:DesignHeight="756"
+    d:DesignWidth="548"
+    x:Name="dialog"
+    Title="شاخص جدید"
+    PrimaryButtonText="ذخیره"
+    
+    CloseButtonText="لغو"
+    DefaultButton="Primary"
+    PrimaryButtonClick="OnPrimaryButtonClick"
+    SecondaryButtonClick="OnSecondaryButtonClick"
+    CloseButtonClick="OnCloseButtonClick"
+    FlowDirection="RightToLeft"
+    Closed="OnClosed">
+    <ui:ContentDialog.Resources>
+        <converters:DateTimeToPersianDateConverter x:Key="dateToPersianDateConverter"/>
+    </ui:ContentDialog.Resources>
+    <ui:SimpleStackPanel Spacing="20" FlowDirection="RightToLeft">
+        <Label Content="{Binding Description}" />
+
+        <ComboBox 
+            HorizontalAlignment="Stretch"
+            SelectedValue="{Binding Field}"
+            ui:ControlHelper.PlaceholderText="رشته"
+            ItemsSource="{Binding AllFields}" />
+        <ComboBox 
+            HorizontalAlignment="Stretch"
+            SelectedValue="{Binding Subfield, Mode=TwoWay}"
+            ui:ControlHelper.PlaceholderText="فصل"
+            ItemsSource="{Binding Subfields}" />
+        <ui:NumberBox Value="{Binding Value, Mode=TwoWay}" ui:ControlHelper.PlaceholderText="شاخص" SpinButtonPlacementMode="Compact" ></ui:NumberBox>
+    </ui:SimpleStackPanel>
+</ui:ContentDialog>
