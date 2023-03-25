@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DataModel.Model
 {
-    public class PAIndex
+    public class PAIndex: IEquatable<PAIndex>
     {
         public Guid Id { get; set; }
         public virtual double Value { get; set; }
@@ -32,5 +32,17 @@ namespace DataModel.Model
             Subfield = new Subfield();
         }
 
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+            if (!(obj is PAIndex))  return false;
+
+            return this.Id == ((PAIndex)obj).Id;
+        }
+
+        public bool Equals(PAIndex other)
+        {
+            return Id == other.Id;
+        }
     }
 }

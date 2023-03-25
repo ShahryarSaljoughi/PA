@@ -1,4 +1,5 @@
 ﻿using DataModel.Model;
+using ModernWpf.Controls;
 using PaDesktop.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ using System.Windows.Shapes;
 
 namespace PaDesktop.View
 {
-    
+
     public partial class IndexEditWindow
     {
         public IndexEditViewModel ViewModel { get; set; }
@@ -53,6 +54,28 @@ namespace PaDesktop.View
             }
 
 
+        }
+
+        private async void DeleteTimeboxClicked(object sender, RoutedEventArgs e)
+        {
+            var dialog = new RemoveTimeboxConfirmation();
+            var result = await dialog.ShowAsync(placement: ContentDialogPlacement.Popup);
+            if (result == ContentDialogResult.Primary)
+            {
+                await ViewModel.DeleteSelectedTimeboxAsync();
+            }
+        }
+
+        private async void RemoveIndexClicked(object sender, RoutedEventArgs e)
+        {
+            await ViewModel.DeleteSelectedIndexAsync();
+        }
+
+        private void IndexCellEdited(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            if (e.EditAction != DataGridEditAction.Commit) return;
+            PAIndex editedIndex = (PAIndex)e.Row.Item;
+            ViewModel.OnIndexChanged(editedIndex);
         }
     }
 }

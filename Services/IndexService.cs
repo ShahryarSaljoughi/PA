@@ -11,7 +11,8 @@ namespace Services
 {
     public class IndexService : IIndexService
     {
-        private PaDbContext Db {get; set;}
+        private PaDbContext Db { get; set; }
+        public event EventHandler<PAIndex> IndexRemoved;
         public IndexService(PaDbContext db)
         {
             Db = db;
@@ -23,7 +24,31 @@ namespace Services
                 .Select(i => i.Value)
                 .FirstOrDefaultAsync();
             return result;
-            
+
+        }
+
+        public async Task SaveIndexesAsync(IQueryable<PAIndex> paIndices)
+        {
+            Db.Set<PAIndex>().AddRange(paIndices);
+            await Db.SaveChangesAsync();
+        }
+
+        public async Task DeleteIndexAsync(PAIndex index)
+        {
+            Db.Set<PAIndex>().Remove(index);
+            await Db.SaveChangesAsync();
+            IndexRemoved(this, index);
+        }
+
+        public async Task SaveIndexesAsync(List<PAIndex> paIndices)
+        {
+            Db.Set<PAIndex>().AttachRange(paIndices);
+            paIndices.ForEach(async i =>
+            {
+                var itemExists = await Db.Set<PAIndex>().AnyAsync(t => t.Id == i.Id);
+                Db.Entry(i).State = itemExists ? EntityState.Modified : EntityState.Added;
+            });
+            await Db.SaveChangesAsync();
         }
     }
 }

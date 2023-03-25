@@ -40,7 +40,7 @@ namespace PopulateDbJob
                  let monthNo = g.Key.TimeBoxNo.HasValue ? 1 + 3*(g.Key.TimeBoxNo.Value - 1) : 0
                  let start = DateUtil.ToGregorian(g.Key.Year, monthNo, 1, monthStr: g.Key.TimeBoxStr)
                  let TimeBoxDuration = g.Key.TimeBoxNo.HasValue ? 3 : 1 
-                 let end = start.AddPersianMonths(TimeBoxDuration)
+                 let end = start.AddPersianMonths(TimeBoxDuration).AddDays(-1)
                  select new TimeBox()
                  {
                      Id = Guid.NewGuid(),

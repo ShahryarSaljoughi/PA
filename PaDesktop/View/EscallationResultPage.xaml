@@ -21,51 +21,51 @@
             CanUserDeleteRows="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn
-                        Binding="{Binding WorkingTimeBox.SolarYear}"
+                        Binding="{Binding WorkingTimeBox.SolarYear, Mode=OneWay}"
                         Header="سال" />
 
                     <DataGridTextColumn
-                        Binding="{Binding WorkingTimeBox}"
+                        Binding="{Binding WorkingTimeBox, Mode=OneWay}"
                         Header="دوره کارکرد" />
 
                     <DataGridTextColumn
-                        Binding="{Binding EscalationItem.Subfield.Field}"
+                        Binding="{Binding EscalationItem.Subfield.Field, Mode=OneWay}"
                         Header="رشته" />
 
                     <DataGridTextColumn
-                        Binding="{Binding EscalationItem.Subfield.Number}"
+                        Binding="{Binding EscalationItem.Subfield.Number, Mode=OneWay}"
                         Header="فصل" />
 
                     <DataGridTextColumn
-                        Binding="{Binding EscalationItem.CurrentPrice}"
+                        Binding="{Binding EscalationItem.CurrentPrice, Mode=OneWay}"
                         Header="مبلغ صورت وضعیت فعلی" />
 
                     <DataGridTextColumn                    
-                        Binding="{Binding EscalationItem.PreviousPrice}"
+                        Binding="{Binding EscalationItem.PreviousPrice, Mode=OneWay}"
                         Header="مبلغ صورت وضعیت قبلی" />
 
                     <DataGridTextColumn
-                        Binding="{Binding EscalationItem.PriceDifference}"
+                        Binding="{Binding EscalationItem.PriceDifference, Mode=OneWay}"
                         Header="مبلغ مابه التفاوت دو صورت وضعیت" />
 
                     <DataGridTextColumn
-                        Binding="{Binding WorkingProportion}"
+                        Binding="{Binding WorkingProportionRounded, Mode=OneWay}"
                         Header="نسبت مدت کارکرد در دوره به مدت کارکرد" />
 
                     <DataGridTextColumn
-                        Binding="{Binding EscalationItem.BaseIndex}"
+                        Binding="{Binding EscalationItem.BaseIndex, Mode=OneWay}"
                         Header="شاخص مبنا" />
 
                     <DataGridTextColumn
-                        Binding="{Binding WorkingTimeBoxIndex}"
+                        Binding="{Binding WorkingTimeBoxIndex, Mode=OneWay}"
                         Header="شاخص دوره کارکرد" />
 
                     <DataGridTextColumn
-                        Binding="{Binding EscalationCoefficient}"
+                        Binding="{Binding EscalationCoefficientRounded, Mode=OneWay}"
                         Header="ضریب تعدیل" />
 
                     <DataGridTextColumn
-                        Binding="{Binding EscalationPrice}"
+                        Binding="{Binding EscalationPriceRounded, Mode=OneWay}"
                         Header="مبلغ تعدیل" />
                 </DataGrid.Columns>
             </DataGrid>

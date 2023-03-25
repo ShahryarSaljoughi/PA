@@ -36,8 +36,8 @@
                     </ListView.View>
                 </ListView>
                 <StackPanel HorizontalAlignment="Center" Grid.Row="1"  Orientation="Horizontal" Margin="0 20 0 0" >
-                    <Button Command="{Binding RemoveTimeboxCommand}" MinWidth="80" Margin="0 0 20 10" Content="حذف" />
-                    <Button Click="NewTimeboxClicked" Command="{Binding NewTimeboxCommand}"  MinWidth="80"  Margin="20 0 0 10" Content="جدید" />
+                    <Button Click="DeleteTimeboxClicked"  MinWidth="80" Margin="0 0 20 10" Content="حذف" />
+                    <Button Click="NewTimeboxClicked"   MinWidth="80"  Margin="20 0 0 10" Content="جدید" />
                 </StackPanel>
             </Grid>
         </GroupBox>
@@ -50,18 +50,21 @@
                 <DataGrid 
                     Grid.Row="0"
                     ItemsSource="{Binding Indexes}"
+                    CellEditEnding="IndexCellEdited"
+                    SelectedValue="{Binding SelectedIndex, Mode=OneWayToSource}"
                     AutoGenerateColumns="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="رشته" Binding="{Binding  Subfield.Field}" />
-                        <DataGridTextColumn Header="شماره فصل" Binding="{Binding Subfield.Number}" />
-                        <DataGridTextColumn Header="عنوان فصل" Binding="{Binding Subfield.Title}" />
-                        <DataGridTextColumn  Header="شاخص" Binding="{Binding Value}" />
+                        <DataGridTextColumn Header="رشته" Binding="{Binding  Subfield.Field}" IsReadOnly="True" />
+                        <DataGridTextColumn Header="شماره فصل" Binding="{Binding Subfield.Number}" IsReadOnly="True" />
+                        <DataGridTextColumn Header="عنوان فصل" Binding="{Binding Subfield.Title}" IsReadOnly="True" />
+                        <DataGridTextColumn  Header="شاخص" Binding="{Binding Value, Mode=TwoWay}" />
                     </DataGrid.Columns>
                 </DataGrid>
                 <StackPanel HorizontalAlignment="Center" Grid.Row="1"  Orientation="Horizontal" Margin="0 20 0 0" >
-                    <Button MinWidth="80" Margin="0 0 20 10" Content="شاخص جدید" />
-                    <Button MinWidth="80" Margin="0 0 0 10" Content="ذخیره" />
-                    <Button MinWidth="80"  Margin="20 0 0 10" ToolTip="اگر برای محاسبات تعدیل، نیاز به شاخص‌های دوره‌ای دارید که هنوز شاخص‌هایش توسط دولت اعلام نشده است، میتوانید شاخص‌های دوره قبل را به طور موقت استفاده کنید" Content="کپی از دوره‌دیگر" />
+                    <Button Command="{Binding}"  MinWidth="80" Margin="0 0 20 10" Content="شاخص جدید" />
+                    <Button Click="RemoveIndexClicked" MinWidth="80" Margin="0 0 20 10" Content="حذف شاخص" />
+                    <Button Command="{Binding SaveIndexChangesCommand}"  MinWidth="80" Margin="0 0 0 10" Content=" ذخیره تغیرات" />
+                    <!--<Button MinWidth="80"  Margin="20 0 0 10" ToolTip="اگر برای محاسبات تعدیل، نیاز به شاخص‌های دوره‌ای دارید که هنوز شاخص‌هایش توسط دولت اعلام نشده است، میتوانید شاخص‌های دوره قبل را به طور موقت استفاده کنید" Content="کپی از دوره‌دیگر" />-->
                 </StackPanel>
             </Grid>
         </GroupBox>

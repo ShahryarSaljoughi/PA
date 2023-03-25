@@ -1,0 +1,9 @@
+2023-03-25 10:09:40.816 +04:30 [INF] Application started. Press Ctrl+C to shut down.
+2023-03-25 10:09:40.868 +04:30 [INF] Hosting environment: Production
+2023-03-25 10:09:40.869 +04:30 [INF] Content root path: I:\military service\MoaMoh\PriceAdjustmentApp\PA\PopulateDbJob
+2023-03-25 10:13:54.897 +04:30 [INF] Application started. Press Ctrl+C to shut down.
+2023-03-25 10:13:54.949 +04:30 [INF] Hosting environment: Production
+2023-03-25 10:13:54.951 +04:30 [INF] Content root path: I:\military service\MoaMoh\PriceAdjustmentApp\PA\PopulateDbJob
+2023-03-25 10:26:19.861 +04:30 [INF] Application started. Press Ctrl+C to shut down.
+2023-03-25 10:26:19.908 +04:30 [INF] Hosting environment: Production
+2023-03-25 10:26:19.910 +04:30 [INF] Content root path: I:\military service\MoaMoh\PriceAdjustmentApp\PA\PopulateDbJob

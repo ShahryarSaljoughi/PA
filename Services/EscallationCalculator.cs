@@ -33,6 +33,7 @@ namespace Services
             MapEscallationDtoToEntity();
 
             var timeboxes = await GetWorkingTimeBoxesAsync();
+            if (timeboxes.Any(t => t.IsInterim)) { Escalation.IsInterim = true; }
             foreach (var item in Escalation.Items)
             {
                 var baseIndex = await IndexService.GetIndexAsync(item.Subfield.Id, Escalation.BaseTimeBox.Id);
