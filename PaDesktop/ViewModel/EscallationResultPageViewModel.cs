@@ -36,10 +36,11 @@ namespace PaDesktop.ViewModel
         {
             Escalation = await Calculator.CalculateAsync();
             var rows = Escalation.Items.SelectMany(i => i.Rows).ToList();
+            this.Rows.Clear();
             this.Rows.AddRange(rows);
             OnPropertyChanged(nameof(Rows));
         }
-        public async Task ExportExcel(string path)
+        public async Task ExportExcelAsync(string path)
         {
             await ExcelService.ExportAsync(path, Escalation);
         }

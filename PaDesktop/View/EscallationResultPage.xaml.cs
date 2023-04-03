@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Win32;
 using PaDesktop.ViewModel;
+using Services.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace PaDesktop.View
 {
     /// <summary>
@@ -23,8 +25,9 @@ namespace PaDesktop.View
     /// </summary>
     public partial class EscallationResultPage : UserControl
     {
+        ILogger Logger { get; set; }
         EscallationResultPageViewModel ViewModel { get; set; }
-        
+
         //public EscallationResultPage(EscallationResultPageViewModel vm)
         //{
         //    InitializeComponent();
@@ -33,21 +36,39 @@ namespace PaDesktop.View
 
         public EscallationResultPage()
         {
-            ViewModel = App.Current.Services.GetService<EscallationResultPageViewModel>(); 
+            Logger = App.Current.Services.GetService<ILogger>();
+            ViewModel = App.Current.Services.GetService<EscallationResultPageViewModel>();
             this.DataContext = ViewModel;
             InitializeComponent();
         }
 
         private async void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            await ViewModel.CalculateAsync();
+            try
+            {
+                await ViewModel.CalculateAsync();
+
+            }
+            catch (Exception error)
+            {
+                Logger.Log(error);
+            }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.ShowDialog();
-            ViewModel.ExportExcel(saveFileDialog.FileName);
+            try
+            {
+                SaveFileDialog saveFileDialog = new SaveFileDialog();
+                saveFileDialog.Filter = "Excel (*.xlsx)|*xlsx";
+                saveFileDialog.ShowDialog();
+                await ViewModel.ExportExcelAsync(saveFileDialog.FileName);
+
+            }
+            catch (Exception error)
+            {
+                Logger.Log(error);
+            }
         }
     }
 }

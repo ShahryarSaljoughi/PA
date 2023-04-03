@@ -1,4 +1,5 @@
-﻿using DataModel.Model;
+﻿using Serilog;
+using DataModel.Model;
 using Microsoft.EntityFrameworkCore;
 using PaDesktop.Core;
 using PaDesktop.ViewModel;
@@ -16,16 +17,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace PaDesktop.View
 {
     public partial class EscallationInputPage : UserControl
     {
-        private EscallationInputViewModel? ViewModel { get; set; } 
+        private EscallationInputViewModel? ViewModel { get; set; }
+        private ILogger Logger { get; set; }
         public EscallationInputPage()
         {
             InitializeComponent();
             ViewModel = (EscallationInputViewModel)App.Current.Services.GetService(typeof(EscallationInputViewModel));
+            Logger = App.Current.Services.GetService<ILogger>();
             DataContext = ViewModel;
         }
         public EscallationInputPage(EscallationInputViewModel vm)
@@ -36,7 +40,22 @@ namespace PaDesktop.View
 
         private async void EscallationInputPage_Loaded(object sender, RoutedEventArgs e)
         {
-            await ViewModel?.PopulateDataAsync();
+            try
+            {
+                await ViewModel?.PopulateDataAsync();
+            }
+            catch (Exception error)
+            {
+                Logger.Error(
+                    $@"
+Error:
+{error.ToString()}
+StackTrace:
+{error.StackTrace}
+InnerException:
+{error.InnerException}");
+                throw;
+            }
         }
     }
 }

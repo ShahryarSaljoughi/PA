@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DataModel.Model
@@ -17,5 +18,12 @@ namespace DataModel.Model
         /// علی الحساب است؟ یا قطعی است؟
         /// </summary>
         public virtual bool? IsInterim { get; set; } = false;
+
+        public decimal GetSumOfField(string? Field)
+        {
+            if (string.IsNullOrWhiteSpace(Field)) return 0;
+            var result = Items.Where(i => i.Subfield?.Field == Field).SelectMany(i => i.Rows).Sum(r => r.EscalationPrice);
+            return result;
+        }
     }
 }

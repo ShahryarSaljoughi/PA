@@ -2,19 +2,9 @@
 using ModernWpf.Controls;
 using PaDesktop.ViewModel;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Services.Abstractions;
 
 namespace PaDesktop.View
 {
@@ -22,6 +12,7 @@ namespace PaDesktop.View
     public partial class IndexEditWindow
     {
         public IndexEditViewModel ViewModel { get; set; }
+        private ILogger Logger { get; set; }
         public IndexEditWindow(IndexEditViewModel vm)
         {
             InitializeComponent();
@@ -34,7 +25,14 @@ namespace PaDesktop.View
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            await ViewModel.PopulateDataAsync();
+            try
+            {
+                await ViewModel.PopulateDataAsync();
+            }
+            catch (Exception error)
+            {
+                Logger.Log(error);
+            }
         }
 
         private void TimeBoxes_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -45,27 +43,48 @@ namespace PaDesktop.View
 
         private async void NewTimeboxClicked(object sender, RoutedEventArgs e)
         {
-            var dialog = new NewTimeboxContentDialog();
-            var result = await dialog.ShowAsync(placement: ModernWpf.Controls.ContentDialogPlacement.InPlace);
-            if (result == ModernWpf.Controls.ContentDialogResult.Primary)
+            try
             {
-                await ViewModel.SaveTimeBoxAsync(dialog.ViewModel);
+                var dialog = new NewTimeboxContentDialog();
+                var result = await dialog.ShowAsync(placement: ModernWpf.Controls.ContentDialogPlacement.InPlace);
+                if (result == ModernWpf.Controls.ContentDialogResult.Primary)
+                {
+                    await ViewModel.SaveTimeBoxAsync(dialog.ViewModel);
+                }
+            }
+            catch (Exception error)
+            {
+                Logger.Log(error);
             }
         }
 
         private async void DeleteTimeboxClicked(object sender, RoutedEventArgs e)
         {
-            var dialog = new RemoveTimeboxConfirmation();
-            var result = await dialog.ShowAsync(placement: ContentDialogPlacement.Popup);
-            if (result == ContentDialogResult.Primary)
+            try
             {
-                await ViewModel.DeleteSelectedTimeboxAsync();
+                var dialog = new RemoveTimeboxConfirmation();
+                var result = await dialog.ShowAsync(placement: ContentDialogPlacement.Popup);
+                if (result == ContentDialogResult.Primary)
+                {
+                    await ViewModel.DeleteSelectedTimeboxAsync();
+                }
+            }
+            catch (Exception error)
+            {
+                Logger.Log(error);
             }
         }
 
         private async void RemoveIndexClicked(object sender, RoutedEventArgs e)
         {
-            await ViewModel.DeleteSelectedIndexAsync();
+            try
+            {
+                await ViewModel.DeleteSelectedIndexAsync();
+            }
+            catch (Exception error)
+            {
+                Logger.Log(error);
+            }
         }
 
         private void IndexCellEdited(object sender, DataGridCellEditEndingEventArgs e)
@@ -79,11 +98,19 @@ namespace PaDesktop.View
         {
             var dialogVm = new NewIndexDialogViewModel(ViewModel.SelectedTimeBox);
             var dialog = new NewIndexContentDialog(dialogVm);
-            await dialogVm.InitializeAsync();
-            var result = await dialog.ShowAsync(ContentDialogPlacement.InPlace);
-            if (result != ContentDialogResult.Primary) { return; }
-            var newIndex = dialogVm.CreateIndex();
-            await ViewModel.AddIndexAsync(newIndex);
+            try
+            {
+                await dialogVm.InitializeAsync();
+                var result = await dialog.ShowAsync(ContentDialogPlacement.InPlace);
+                if (result != ContentDialogResult.Primary) { return; }
+                var newIndex = dialogVm.CreateIndex();
+                await ViewModel.AddIndexAsync(newIndex);
+
+            }
+            catch (Exception error)
+            {
+                Logger.Log(error);
+            }
         }
     }
 }

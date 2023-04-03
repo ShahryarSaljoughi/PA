@@ -32,6 +32,8 @@ namespace DataModel.Model
         public double EscalationCoefficientRounded => Math.Round(EscalationCoefficient, 4);
         public decimal EscalationPrice { get => escalationPrice; set => escalationPrice = value; }
         public decimal EscalationPriceRounded => decimal.Round(escalationPrice, 4);
+        public decimal WorkingPriceInCurrentTimebox => decimal.Round(
+            EscalationItem.PriceDifference * (decimal)WorkingProportion, 4);
         public virtual EscalationItem EscalationItem { get; set; }
 
         public EscalationItemRow(EscalationItem escalationItem)

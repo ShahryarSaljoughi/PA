@@ -25,11 +25,13 @@ namespace PaDesktop.View
     {
         public ITimeBoxService TimeBoxService { get; set; }
         public IndexEditWindow? IndexEditWindow { get; set; }
-        public MainWindow(MainWindowViewModel vm, ITimeBoxService timeBoxService, IndexEditWindow indexEditWindow)
+        private ILogger Logger { get; set; }
+        public MainWindow(MainWindowViewModel vm, ITimeBoxService timeBoxService, IndexEditWindow indexEditWindow, ILogger logger)
         {
             InitializeComponent();
             DataContext = vm;
             TimeBoxService = timeBoxService;
+            Logger = logger;
             //IndexEditWindow = indexEditWindow;
         }
 
@@ -46,7 +48,15 @@ namespace PaDesktop.View
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            try
+            {
             await TimeBoxService.LoadAsync();
+
+            }
+            catch (Exception error)
+            {
+                Logger.Log(error);
+            }
         }
 
         private void OpenEditWindow()

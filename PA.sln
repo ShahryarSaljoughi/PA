@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Script", "Script", "{A81C76D0-E773-4AB0-82D0-3C44DE52DF60}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "WizardSetup", "WizardSetup\WizardSetup.vdproj", "{325B592D-91D4-483D-BC1B-0A5B4EA6F61C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,8 @@ Global
 		{0DCA76C7-504D-4F1A-95FB-315679D2ECA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DCA76C7-504D-4F1A-95FB-315679D2ECA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DCA76C7-504D-4F1A-95FB-315679D2ECA1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{325B592D-91D4-483D-BC1B-0A5B4EA6F61C}.Debug|Any CPU.ActiveCfg = Debug
+		{325B592D-91D4-483D-BC1B-0A5B4EA6F61C}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

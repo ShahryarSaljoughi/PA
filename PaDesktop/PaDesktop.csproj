@@ -22,6 +22,7 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="ModernWpfUI" Version="0.9.6" />
     <PackageReference Include="Mohsen.PersianDateControls" Version="1.0.1" />
+    <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     <!--<PackageReference Include="WPF-UI" Version="2.0.3" />-->
   </ItemGroup>
 
