@@ -150,7 +150,7 @@ namespace Services
             foreach (var item in items)
             {
                 usedRowsCount += WriteItemRows(item, itemStartRow);
-                itemStartRow = startingRow + usedRowsCount + 1;
+                itemStartRow = startingRow + usedRowsCount;
             }
             usedRowsCount += WriteSumOfField(items, startingRow: startingRow + usedRowsCount + 1);
             return usedRowsCount;

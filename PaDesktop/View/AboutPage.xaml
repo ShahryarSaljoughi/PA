@@ -1,0 +1,73 @@
+﻿<UserControl x:Class="PaDesktop.View.AboutPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PaDesktop.View"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
+             mc:Ignorable="d" 
+             d:DesignHeight="768" d:DesignWidth="1056">
+
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="300px"/>
+            <!-- header -->
+            <RowDefinition />
+            <!-- content -->
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0">
+            <Border.Background>
+                <ImageBrush ImageSource="/PaDesktop;component/blue.jpg"></ImageBrush>
+            </Border.Background>
+        </Border>
+        <Grid Grid.Row="1" FlowDirection="RightToLeft">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="600" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <ui:ScrollViewerEx Grid.Column="1" Margin="0 20">
+                <ui:SimpleStackPanel Grid.Column="1" Margin="0 20">
+                    <TextBlock TextWrapping="Wrap" >
+                    نرم افزار حاضر در سال 1401 در معاونت مهندسی فرماندهی انتظامی استان زنجان اراده عمران و نوسازی طراحی و پیاده سازی شده است.
+                    </TextBlock>
+                    <TextBlock TextAlignment="Justify" TextWrapping="Wrap" Margin="0 10 0 0" >
+                    ساخت این برنامه نرم افزاری، برای تسهیل و تسریع در امور معاونت مهندسی، با نظر جناب سرهنگ والی آغاز شد و با راهنمایی‌ها و نقطه نظرات ارزشمند جناب سرهنگ مهندس امیرعلی پرویزپور، جانشین معاونت مهندسی، و همت و پشتکار آقایان دکتر صالح قربانی و معین پالیزی به سرانجام رسید. امید است که راهکار نرم‌افزاری پیش‌رو، گامی دیگر به سوی ارائه خدمات انتظامی بهتر به شهروندان باشد.
+                    </TextBlock>
+                    <Grid Margin="0 20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"></ColumnDefinition>
+                            <ColumnDefinition Width="20"></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition MaxHeight="100"></RowDefinition>
+                            <RowDefinition MaxHeight="100"></RowDefinition>
+                            <RowDefinition MaxHeight="100"></RowDefinition>
+                            <RowDefinition MaxHeight="100"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Image Grid.Column="0" Grid.Row="0" Margin="0 0 0 0" Source="/PADesktop;component/Assets/Image/profileart.png" MaxHeight="100"></Image>
+                        <TextBlock Grid.Column="2" Grid.Row="0" VerticalAlignment="Center"  >
+                            <Bold>سرهنگ مهندس ذکریا والی</Bold><LineBreak />معاون مهندسی فراجا زنجان
+                        </TextBlock>
+                        <Image Grid.Column="0" Grid.Row="1" Margin="0 0 0 0" Source="/PADesktop;component/Assets/Image/profileart.png" MaxHeight="100"></Image>
+                        <TextBlock Grid.Column="2" Grid.Row="1" VerticalAlignment="Center"  >
+                            <Bold>سرهنگ مهندس امیرعالی پرویزپور</Bold><LineBreak />جانشین معاونت مهندسی فراجا زنجان
+                        </TextBlock>
+                        <Image Grid.Column="0" Grid.Row="2" Margin="0 0 0 0" Source="/PADesktop;component/Assets/Image/profileart.png" MaxHeight="100"></Image>
+                        <TextBlock Grid.Column="2" Grid.Row="2" VerticalAlignment="Center"  >
+                            <Bold>دکتر صالح قربانی</Bold>
+                        </TextBlock>
+                        <Image Grid.Column="0" Grid.Row="3" Margin="0 0 0 0" Source="/PADesktop;component/Assets/Image/profileart.png" MaxHeight="100"></Image>
+                        <TextBlock Grid.Column="2" Grid.Row="3" VerticalAlignment="Center"  >
+                            <Bold>دکتر معین پالیزی</Bold>
+                        </TextBlock>
+                    </Grid>
+
+
+                </ui:SimpleStackPanel>
+            </ui:ScrollViewerEx>
+        </Grid>
+    </Grid>
+</UserControl>

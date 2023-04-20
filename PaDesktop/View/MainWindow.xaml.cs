@@ -34,6 +34,10 @@ namespace PaDesktop.View
             Logger = logger;
             //IndexEditWindow = indexEditWindow;
         }
+        private void aboutNav_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            ((MainWindowViewModel)DataContext).GoToAboutPage.Execute(null);
+        }
 
         private void escacalnav_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -73,5 +77,6 @@ namespace PaDesktop.View
             var activated = IndexEditWindow.Activate();
             IndexEditWindow.Focus();
         }
+
     }
 }

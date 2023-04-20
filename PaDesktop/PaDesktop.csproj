@@ -5,10 +5,15 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <PlatformTarget>x86</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
+    <ApplicationIcon>dimensions_property_house_home_civil_engineering_drawing_sketch_plan_construction_icon_219092.ico</ApplicationIcon>
+    <Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Image\profileart.png" />
+    <None Remove="blue.jpg" />
+    <None Remove="R.jpg" />
     <None Remove="splashscreen.png" />
   </ItemGroup>
 
@@ -22,6 +27,7 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="ModernWpfUI" Version="0.9.6" />
     <PackageReference Include="Mohsen.PersianDateControls" Version="1.0.1" />
+    <PackageReference Include="Serilog.Sinks.EventLog" Version="3.1.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="5.0.0" />
     <!--<PackageReference Include="WPF-UI" Version="2.0.3" />-->
   </ItemGroup>
@@ -33,11 +39,18 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Assets\Image\" />
+    <Resource Include="Assets\Image\profileart.png" />
+    <Resource Include="blue.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <SplashScreen Include="splashscreen.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="kisspng-architectural-engineering-civil-engineering-buildi-5adec830582052.803335841524549680361.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

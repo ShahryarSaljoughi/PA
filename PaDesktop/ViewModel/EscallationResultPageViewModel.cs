@@ -35,7 +35,12 @@ namespace PaDesktop.ViewModel
         public async Task CalculateAsync()
         {
             Escalation = await Calculator.CalculateAsync();
-            var rows = Escalation.Items.SelectMany(i => i.Rows).ToList();
+            var rows = Escalation.Items.SelectMany(i => i.Rows)
+                .OrderBy(r => r.EscalationItem.Subfield?.Field)
+                .ThenBy(r => r.EscalationItem.Subfield?.Number)
+                .ThenBy(r => r.WorkingTimeBox)
+                .ToList();
+
             this.Rows.Clear();
             this.Rows.AddRange(rows);
             OnPropertyChanged(nameof(Rows));

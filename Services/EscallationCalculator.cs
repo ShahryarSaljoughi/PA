@@ -52,6 +52,7 @@ namespace Services
                         (decimal)escalationCoefficient * item.PriceDifference * (decimal)row.WorkingProportion;
                     item.Rows.Add(row);
                 }
+                
             }
             Escalation.IsCalculated = true;
             Db.Add(Escalation);
@@ -86,7 +87,10 @@ namespace Services
                 Subfield = d.Subfield,
                 Rows = new List<EscalationItemRow>(),
                 EscalationId = Escalation.Id
-            }).ToList();
+            })
+                .OrderBy(d => d.Subfield.Field)
+                .ThenBy(d => d.Subfield.Number)
+                .ToList();
             Escalation.Items.AddRange(items);
         }
     }

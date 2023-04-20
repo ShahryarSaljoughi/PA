@@ -40,6 +40,7 @@ namespace PaDesktop
             services.AddSingleton<EscallationInputViewModel>();
             services.AddSingleton<PriceInputViewModel>();
             services.AddSingleton<EscallationResultPageViewModel>();
+            services.AddSingleton<AboutViewModel>();
             services.AddSingleton<Core.PaDbContext, Core.PaDbContext>();
             services.AddSingleton<Services.PaDbContext, Services.PaDbContext>();
             services.AddSingleton<ITimeBoxService, TimeBoxService>();
@@ -58,7 +59,9 @@ namespace PaDesktop
         {
             services.AddSingleton<Serilog.ILogger>(sp =>
             {
-                var config = new LoggerConfiguration().WriteTo.File($"log{DateTime.Now.Ticks}.txt");
+                var config = new LoggerConfiguration()
+                .WriteTo.File($"log{DateTime.Now.Ticks}.txt")
+                .WriteTo.EventLog("Price Adjustment App");
                 var logger = config.CreateLogger();
                 Serilog.Log.Logger = logger;
                 return logger;

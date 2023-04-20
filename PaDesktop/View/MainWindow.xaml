@@ -31,6 +31,10 @@
             <view:EscallationResultPage></view:EscallationResultPage>
         </DataTemplate>
 
+        <DataTemplate DataType="{x:Type viewModel:AboutViewModel}">
+            <view:AboutPage></view:AboutPage>
+        </DataTemplate>
+
         <Style TargetType="Label" >
             <Style.Setters>
                 <Setter Property="FontFamily" Value="/Assets/Font/IRANSans" />
@@ -53,6 +57,12 @@
                     Icon="Calculator"
                     x:Name="escacalnav"
                     Content="محاسبه تعدیل" />
+                <ui:NavigationViewItem
+                    MouseDown="aboutNav_MouseDown"
+                    Icon="ContactInfo"
+                    Content="درباره ما" />
+
+
             </ui:NavigationView.MenuItems>
 
             <!--page container-->

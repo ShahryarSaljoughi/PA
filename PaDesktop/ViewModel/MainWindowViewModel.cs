@@ -26,6 +26,7 @@ namespace PaDesktop.ViewModel
         public EscallationInputViewModel EscallationInputViewModel { get; set; }
         public IndexEditViewModel IndexEditViewModel { get; set; }
         public ICommand GoToEscallationInputPage { get; set; }
+        public ICommand GoToAboutPage { get; set; }
         public ViewModelBase CurrentPage => NavigationService.CurrentPage;
 
         public MainWindowViewModel(IndexEditViewModel indexmVm, EscallationInputViewModel escallationInputVm, INavigationService navigationService)
@@ -37,6 +38,10 @@ namespace PaDesktop.ViewModel
             GoToEscallationInputPage = new RelayCommand(obj =>
             {
                 NavigationService.Navigate<EscallationInputViewModel>();
+            });
+            GoToAboutPage = new RelayCommand(obj =>
+            {
+                NavigationService.Navigate<AboutViewModel>();
             });
             NavigationService.Navigate<EscallationInputViewModel>();
         }
