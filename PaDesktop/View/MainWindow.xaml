@@ -9,7 +9,7 @@
         xmlns:view="clr-namespace:PaDesktop.View"
         mc:Ignorable="d"
         ui:WindowHelper.UseModernWindowStyle="True"
-        Title="تعدیل" Height="640" Width="1024"
+        Title="تعدیل" Height="850" Width="1460"
         Background="{DynamicResource SystemControlPageBackgroundAltHighBrush}"
         Foreground="{DynamicResource SystemControlPageTextBaseHighBrush}"
         Loaded="Window_Loaded"

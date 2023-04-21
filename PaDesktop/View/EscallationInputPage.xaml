@@ -45,7 +45,9 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <CheckBox Margin="0 10 0 10" Grid.Row="0" Content="صورت وضعیت فعلی،صورت وضعیت نهایی است." FlowDirection="RightToLeft" ></CheckBox>
+        <CheckBox 
+            IsChecked="{Binding IsCurrentStatementFinal }"
+            Margin="0 10 0 10" Grid.Row="0" Content="صورت وضعیت فعلی،صورت وضعیت نهایی است." FlowDirection="RightToLeft" ></CheckBox>
 
         <Grid Margin="0 0 0 10"  Grid.Row="1" >
             <Grid.ColumnDefinitions>
@@ -100,15 +102,23 @@
             MinWidth="170"
             Grid.Row="4" ></ComboBox>
 
+        <TextBox 
+            Text="{Binding ProjectTitle}"
+            Grid.Row="5" Margin="0 10 0 10" ui:ControlHelper.Header="عنوان پروژه" />
 
-        <TextBox Grid.Row="5" Margin="0 10 0 10" ui:ControlHelper.Header="نام کارفرما" />
+        <TextBox 
+            Text="{Binding Employer}"
+            Grid.Row="6" Margin="0 10 0 10" ui:ControlHelper.Header="نام کارفرما" />
 
-        <TextBox Grid.Row="6" Margin="0 10 0 10" ui:ControlHelper.Header="نام پیمانکار"  />
+        <TextBox 
+            Text="{Binding Contractor}"
+            Grid.Row="7" Margin="0 10 0 10" ui:ControlHelper.Header="نام پیمانکار"  />
 
         <DockPanel Margin="0 100 0 0" Grid.Row="50" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
             <Button 
                 MaxWidth="100" 
                 MinHeight="40" 
+                IsEnabled="{Binding IsFormValid}"
                 Command="{Binding GoToNextPageCommand}">
                 مرحله بعد
                 <Button.DataContext>

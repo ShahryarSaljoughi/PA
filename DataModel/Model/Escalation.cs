@@ -18,7 +18,11 @@ namespace DataModel.Model
         /// علی الحساب است؟ یا قطعی است؟
         /// </summary>
         public virtual bool? IsInterim { get; set; } = false;
-
+        public bool IsCurrentStatementFinal { get; set; } = false; // صورت وضعیت نهایی
+        public string Contractor { get; set; } = string.Empty; // پیمانکار
+        public string Employer { get; set; } = string.Empty; // کارفرما
+        public string ProjectTitle { get; set; } = string.Empty;
+        public DateTime? ContractStartDateTime { get; set; }
         public decimal GetSumOfField(string? Field)
         {
             if (string.IsNullOrWhiteSpace(Field)) return 0;

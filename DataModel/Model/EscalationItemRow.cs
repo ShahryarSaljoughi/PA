@@ -29,7 +29,7 @@ namespace DataModel.Model
         /// ضریب تعدیل
         /// </summary>
         public double EscalationCoefficient { get; set; }
-        public double EscalationCoefficientRounded => Math.Round(EscalationCoefficient, 4);
+        public double EscalationCoefficientRounded => Math.Round(EscalationCoefficient, 3);
         public decimal EscalationPrice { get => escalationPrice; set => escalationPrice = value; }
         public decimal EscalationPriceRounded => decimal.Round(escalationPrice, 4);
         public decimal WorkingPriceInCurrentTimebox => decimal.Round(
@@ -51,16 +51,23 @@ namespace DataModel.Model
 
         private double GetWorkingProportion()
         {
+            var isLastDayIncludedInWhleDuration = this.EscalationItem.Escalation.IsCurrentStatementFinal;
+            var isWorkingTimeBoxTheLastOne = WorkingTimeBox?.End.Date >= EscalationItem.Escalation.CurrentStatementTime?.Date;
+            var isLastDayIncludedInWorkingTimeBox = this.EscalationItem.Escalation.IsCurrentStatementFinal && isWorkingTimeBoxTheLastOne || !isWorkingTimeBoxTheLastOne;
             var start = WorkingTimeBox?.Start > EscalationItem.Escalation.PreviousStatementTime
                 ? WorkingTimeBox.Start
                 : EscalationItem.Escalation.PreviousStatementTime;
             var end = WorkingTimeBox?.End < EscalationItem.Escalation.CurrentStatementTime
                 ? WorkingTimeBox?.End
                 : EscalationItem.Escalation.CurrentStatementTime;
+            var workingDurationInTimebox = (end?.Date - start?.Date).Value.Days + (isLastDayIncludedInWorkingTimeBox ? 1 : 0);
+            var overallWorkingDuration =
+                (EscalationItem?.Escalation?.CurrentStatementTime - EscalationItem?.Escalation?.PreviousStatementTime)?.Days
+                + (isLastDayIncludedInWhleDuration ? 1 : 0);
             var result =
-                 (double)(end - start).Value.Days /
-                (EscalationItem.Escalation.CurrentStatementTime - EscalationItem.Escalation.PreviousStatementTime).Value.Days;
-            var rounded = Math.Round(result, 4);
+                 (double)workingDurationInTimebox /
+                overallWorkingDuration;
+            var rounded = (double)Math.Round((double)result.Value, 4);
             return rounded;
         }
 

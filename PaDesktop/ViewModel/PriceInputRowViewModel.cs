@@ -39,21 +39,28 @@ namespace PaDesktop.ViewModel
             }
         }
         public ObservableCollection<Subfield> Subfields { get; set; } = new ObservableCollection<Subfield>();
-        public decimal? PreviousPrice { get => RowDto.PreviousPrice; set => RowDto.PreviousPrice= value ?? 0; }
+        public decimal? PreviousPrice { get => RowDto.PreviousPrice; set => RowDto.PreviousPrice = value ?? 0; }
         public decimal? CurrentPrice { get => RowDto.CurrentPrice; set => RowDto.CurrentPrice = value ?? 0; }
 
         public static async Task PopulateStaticDataAsync()
         {
             var service = App.Current.Services.GetService<ISubfieldService>();
-            var allSubFields = await service.GetAllSubfieldsAsync();
-            foreach (var item in allSubFields)
+            if (!AllSubFields.Any())
             {
-                AllSubFields.Add(item);
+                var allSubFields = await service.GetAllSubfieldsAsync();
+                foreach (var item in allSubFields)
+                {
+                    AllSubFields.Add(item);
+                }
             }
-            var allFields = await service.GetAllFieldsAsync();
-            foreach (var item in allFields)
+            if (!AllFields.Any())
             {
-                AllFields.Add(item);
+                var allFields = await service.GetAllFieldsAsync();
+                foreach (var item in allFields)
+                {
+                    AllFields.Add(item);
+                }
+
             }
         }
 

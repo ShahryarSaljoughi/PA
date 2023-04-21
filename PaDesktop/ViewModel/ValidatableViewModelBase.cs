@@ -13,6 +13,7 @@ namespace PaDesktop.ViewModel
     {
         private readonly Dictionary<string, List<string>> ErrorsByPropertyName = new();
         public bool HasErrors => ErrorsByPropertyName.Any();
+        public bool IsFormValid { get; set; } = false;
 
         public event EventHandler<DataErrorsChangedEventArgs>? ErrorsChanged;
 
@@ -37,6 +38,7 @@ namespace PaDesktop.ViewModel
                 ErrorsByPropertyName[propertyName].Add(error);
                 ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
                 OnPropertyChanged(nameof(HasErrors));
+                OnPropertyChanged(nameof(IsFormValid));
             }
         }
 
@@ -48,8 +50,10 @@ namespace PaDesktop.ViewModel
             {
                 ErrorsByPropertyName.Remove(propertyName);
                 ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
-                OnPropertyChanged(nameof(HasErrors));
+                
             }
+            OnPropertyChanged(nameof(HasErrors));
+            OnPropertyChanged(nameof(IsFormValid));
         }
 
         protected virtual bool CheckModelValidity() { return true; }

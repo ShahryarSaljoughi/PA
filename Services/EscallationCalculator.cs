@@ -49,7 +49,7 @@ namespace Services
                         EscalationCoefficient = escalationCoefficient,
                     };
                     row.EscalationPrice =
-                        (decimal)escalationCoefficient * item.PriceDifference * (decimal)row.WorkingProportion;
+                        (decimal)row.EscalationCoefficientRounded * item.PriceDifference * (decimal)row.WorkingProportion;
                     item.Rows.Add(row);
                 }
                 
@@ -63,8 +63,11 @@ namespace Services
 
         private async Task<List<TimeBox>> GetWorkingTimeBoxesAsync()
         {
+            var isLastDateIncluded = Escalation.IsCurrentStatementFinal;
             var result = await Db.TimeBoxes
-                .Where(timebox => timebox.End >= Escalation.PreviousStatementTime && timebox.Start <= Escalation.CurrentStatementTime)
+                .Where(timebox => 
+                        timebox.End >= Escalation.PreviousStatementTime && 
+                        (isLastDateIncluded ? timebox.Start <= Escalation.CurrentStatementTime : timebox.Start < Escalation.CurrentStatementTime))
                 .ToListAsync();
 
             return result;
@@ -78,7 +81,11 @@ namespace Services
                 BaseTimeBox = escallationInputDto.BaseTimeBox,
                 Coefficient = escallationInputDto.Coefficient,
                 CurrentStatementTime = escallationInputDto.CurrentStatementTime,
-                PreviousStatementTime = escallationInputDto.PreviousStatementTime
+                PreviousStatementTime = escallationInputDto.PreviousStatementTime,
+                Contractor = escallationInputDto.Contractor,
+                ContractStartDateTime = escallationInputDto.ContractStartDateTime,
+                Employer = escallationInputDto.Employer,
+                ProjectTitle = escallationInputDto.ProjectTitle
             };
             var items = EscalationInputDto.Prices.Select(d => new EscalationItem(Escalation)
             {

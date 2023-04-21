@@ -45,6 +45,7 @@ namespace PaDesktop.ViewModel
             AddRowCommand = new RelayCommand(obj => AddDataGridRow());
             GoNextPage = new RelayCommand(obj =>
             {
+                RemoveInValidRows(EscallationInputDto);
                 NavigationService.Navigate<EscallationResultPageViewModel>();
             });
             GoPreviousPage = new RelayCommand(obj =>
@@ -52,6 +53,15 @@ namespace PaDesktop.ViewModel
                 this.NavigationService.Navigate<EscallationInputViewModel>();
             });
 
+        }
+
+        private void RemoveInValidRows(EscallationInputDto escallationInputDto)
+        {
+            var invalidRows = EscallationInputDto.Prices.Where(r => r.Subfield is null).ToList();
+            if (!invalidRows.Any()) return;
+            invalidRows.ForEach(row => EscallationInputDto.Prices.Remove(row));
+            var invalidVMRows = VMRows.Where(vmr => invalidRows.Contains(vmr.RowDto)).ToList();
+            invalidVMRows.ForEach(ir => VMRows.Remove(ir));
         }
 
         /// <summary>
@@ -77,7 +87,7 @@ namespace PaDesktop.ViewModel
                     foreach (var item in e.OldItems)
                     {
                         var rowVM = (PriceInputRowViewModel)item;
-                        if(!VMRows.Contains(rowVM)) EscallationInputDto.Prices.Remove(rowVM.RowDto);
+                        if (!VMRows.Contains(rowVM)) EscallationInputDto.Prices.Remove(rowVM.RowDto);
                     }
                     break;
                 case NotifyCollectionChangedAction.Replace:
@@ -92,15 +102,21 @@ namespace PaDesktop.ViewModel
 
         public async Task PopulateDataAsync()
         {
-            var subfields = await SubfieldService.GetAllSubfieldsAsync();
-            foreach (var subfield in subfields)
+            if (!Subfields.Any())
             {
-                Subfields.Add(new SubFieldViewModel(subfield));
+                var subfields = await SubfieldService.GetAllSubfieldsAsync();
+                foreach (var subfield in subfields)
+                {
+                    Subfields.Add(new SubFieldViewModel(subfield));
+                }
             }
-            var fields = await SubfieldService.GetAllFieldsAsync();
-            foreach (var field in fields)
+            if (!Fields.Any())
             {
-                Fields.Add(field);
+                var fields = await SubfieldService.GetAllFieldsAsync();
+                foreach (var field in fields)
+                {
+                    Fields.Add(field);
+                }
             }
             await PriceInputRowViewModel.PopulateStaticDataAsync();
         }

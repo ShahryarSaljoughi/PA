@@ -33,16 +33,34 @@ namespace DbMigratorJob.Migrations
                     b.Property<double>("Coefficient")
                         .HasColumnType("REAL");
 
+                    b.Property<DateTime?>("ContractStartDateTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Contractor")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime?>("CurrentStatementTime")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("Employer")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("IsCalculated")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsCurrentStatementFinal")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool?>("IsInterim")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime?>("PreviousStatementTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProjectTitle")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
