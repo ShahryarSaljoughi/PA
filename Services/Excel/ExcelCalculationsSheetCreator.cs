@@ -1,16 +1,16 @@
 ﻿using ClosedXML.Excel;
 using DataModel.Model;
-using DocumentFormat.OpenXml.Wordprocessing;
-using Services.Abstractions;
+using DocumentFormat.OpenXml.Spreadsheet;
+using Services.Abstractions.Excel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services
+namespace Services.Excel
 {
-    public class ExcelExportService : IExcelExportService
+    public class ExcelCalculationsSheetCreator : IExcelCalculationsSheetCreator
     {
         private Escalation? Escalation { get; set; }
         private IXLWorksheet? calculationsSheet { get; set; }
@@ -74,14 +74,12 @@ namespace Services
                 EscalationCoef: "L",
                 EscalationPrice: "M"
                 );
-
-        //https://wpf-tutorial.com/dialogs/the-savefiledialog/
-        public async Task ExportAsync(string path, Escalation escalation)
+        public void WriteCalculationsSheet(Escalation escalation, XLWorkbook workbook)
         {
             Escalation = escalation;
             var usedRowsUpTo = 1;
-            using var workbook = new XLWorkbook();
             calculationsSheet = workbook.Worksheets.Add("محاسبات تعدیل");
+            calculationsSheet.Rows().AdjustToContents();
             calculationsSheet.SetRightToLeft(true);
             usedRowsUpTo += WriteHeaders(usedRowsUpTo);
             var fieldGroups = escalation.Items.GroupBy(i => i.Subfield?.Field);
@@ -92,8 +90,10 @@ namespace Services
                 var items = fieldGroups.ToList()[i].ToArray();
                 WriteItemsOfField(usedRowsUpTo + 1, items);
             }
-            SaveFileAsync(workbook, path);
         }
+
+
+
 
         /// <returns>returns number of rows used</returns>
         private int WriteHeaders(int startRow)
@@ -141,6 +141,7 @@ namespace Services
             return 2;
         }
 
+
         /// <returns>number of rows used</returns>
         private int WriteItemsOfField(int startingRow, EscalationItem[] items)
         {
@@ -168,6 +169,7 @@ namespace Services
 
             return 1;
         }
+
 
         private int WriteItemRows(EscalationItem item, int itemStartRow)
         {
@@ -236,14 +238,8 @@ namespace Services
                 calculationsSheet.Cell(rowNo, columns.EscalationCoef).Value = row.EscalationCoefficientRounded;
                 calculationsSheet.Cell(rowNo, columns.EscalationPrice).Value = row.EscalationPriceRounded;
             }
-            usedRowsCount += item.Rows.Count;
+            usedRowsCount += item.Rows?.Count ?? 0;
             return usedRowsCount;
-        }
-
-        private void SaveFileAsync(XLWorkbook book, string path)
-        {
-            if (!path.EndsWith("xlsx")) { path += ".xlsx"; }
-            book.SaveAs(file: path);
         }
     }
 }

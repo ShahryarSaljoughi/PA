@@ -8,6 +8,8 @@ using Serilog;
 using Serilog.Core;
 using Services;
 using Services.Abstractions;
+using Services.Abstractions.Excel;
+using Services.Excel;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -49,6 +51,8 @@ namespace PaDesktop
             services.AddSingleton<IEscallationCalculator, EscallationCalculator>();
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddScoped<IExcelExportService, ExcelExportService>();
+            services.AddScoped<IExcelCoverSheetCreator, ExcelCoverSheetCreator>();
+            services.AddScoped<IExcelSubfieldsSumSheetCreator, ExcelSubfieldsSumSheetCreator>();
             services.AddTransient<Services.Abstractions.ILogger, Services.Logger>();
             RegisterSeriLogger(services);
 
