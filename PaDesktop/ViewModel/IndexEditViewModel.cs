@@ -24,14 +24,14 @@ namespace PaDesktop.ViewModel
         public bool IsReadyToDeleteIndex => SelectedIndex != null;
         public List<PAIndex> ToBeAddedIndexes { get; } = new List<PAIndex>();
         public ObservableCollection<TimeBox> TimeBoxes { get; set; } = new ObservableCollection<TimeBox>();
-        public TimeBox? SelectedTimeBox 
-        { 
-            get => selectedTimeBox; 
-            set 
-            { 
-                selectedTimeBox = value; 
+        public TimeBox? SelectedTimeBox
+        {
+            get => selectedTimeBox;
+            set
+            {
+                selectedTimeBox = value;
                 OnPropertyChanged(nameof(IsReadyToAddIndex));
-            } 
+            }
         }
         public PAIndex? SelectedIndex
         {
@@ -82,14 +82,17 @@ namespace PaDesktop.ViewModel
                 SolarYear = timeboxVM.SolarYear,
                 ThreeMonthNo = timeboxVM.ThreeMonthNo,
             };
+            SetStartEndDates(timebox);
             if (timebox.IsInterim)
             {
-                SetStartEndDates(timebox);
                 await SetInterimIndexesAsync(timebox);
             }
-            await TimeBoxService.SaveTimeboxAsync(timebox);
-            TimeBoxes.Add(timebox);
-            TimeBoxes.SortDescending();
+            var added = await TimeBoxService.SaveNewTimeboxAsync(timebox);
+            if (added is not null)
+            {
+                TimeBoxes.Add(timebox);
+                TimeBoxes.SortDescending();
+            }
         }
 
         internal async Task DeleteSelectedTimeboxAsync()
@@ -120,7 +123,7 @@ namespace PaDesktop.ViewModel
             if (newIndex == null) { return; }
             await IndexService.SaveNewIndex(newIndex);
             Indexes.Add(newIndex);
-            
+
         }
         private void SetStartEndDates(TimeBox timebox)
         {
@@ -132,7 +135,7 @@ namespace PaDesktop.ViewModel
         }
         private async Task SetInterimIndexesAsync(TimeBox timebox)
         {
-            var lastTimebox = await TimeBoxService.GetLastNonInterimTimeboxAsync();
+            var lastTimebox = await TimeBoxService.GetLatestNonInterimTimeboxBeforeAsync(timebox);
             var indexes = lastTimebox.PAIndexes?.Select(i => new PAIndex(timebox, i.Subfield)
             {
                 Value = i.Value

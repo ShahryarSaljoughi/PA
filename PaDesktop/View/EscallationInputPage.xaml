@@ -8,6 +8,7 @@
         xmlns:viewmodels="clr-namespace:PaDesktop.ViewModel"
         xmlns:timeboxVM="clr-namespace:PaDesktop.ViewModel"
         xmlns:converters="clr-namespace:PaDesktop.Converter"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
         xmlns:persianDateControls="clr-namespace:Mohsen.PersianDateControls;assembly=Mohsen.PersianDateControls" xmlns:local1="clr-namespace:PaDesktop.ViewModel"
         mc:Ignorable="d"
         Height="auto" Width="auto"
@@ -16,9 +17,9 @@
 
     <Grid 
         VerticalAlignment="Top" 
-        HorizontalAlignment="Left"
+        HorizontalAlignment="Stretch"
         FlowDirection="RightToLeft" 
-        MaxWidth="900"
+        MaxWidth="400"
         Name="panel"
         DataContext="{Binding EscallationInputDto}">
         <Grid.Resources>
@@ -44,49 +45,67 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="0" >
-            <Label Margin="10 10 128 10" >تاریخ صورت وضعیت فعلی</Label>
+        <CheckBox Margin="0 10 0 10" Grid.Row="0" Content="صورت وضعیت فعلی،صورت وضعیت نهایی است." FlowDirection="RightToLeft" ></CheckBox>
+
+        <Grid Margin="0 0 0 10"  Grid.Row="1" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Margin="0 10 50 10" >تاریخ صورت وضعیت فعلی</Label>
             <persianDateControls:PersianDatePicker  
-                SelectedDate="{Binding CurrentStatementTime, Converter={StaticResource dateToPersianDateConverter}, Mode=TwoWay}"
-                Height="Auto" />
-        </StackPanel>
-        <!--<StackPanel 
-            Orientation="Horizontal"
-            Grid.Row ="1">
-            <Label Content="صورت وضعیت فعلی، اولین صورت وضعیت مالی است."></Label>
-            <CheckBox FlowDirection="LeftToRight" ></CheckBox>
-        </StackPanel>-->
-
-        <StackPanel Orientation="Horizontal" Grid.Row="2">
-            <Label Margin="10 10 50 10" >تاریخ تحویل زمین یا صورت وضعیت قبلی</Label>
+                Grid.Column="1"
+                Height="Auto"
+                SelectedDate="{Binding CurrentStatementTime, 
+                                       Converter={StaticResource dateToPersianDateConverter}, 
+                                       Mode=TwoWay}"
+                />
+        </Grid >
+        
+        <Grid  Margin="0 10 0 10"  Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition  />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" Margin="0 10 10 10">تاریخ تحویل زمین یا صورت وضعیت قبلی</Label>
             <persianDateControls:PersianDatePicker 
-                SelectedDate="{Binding PreviousStatementTime, Converter={StaticResource dateToPersianDateConverter}, Mode=TwoWay}" 
-                Height="Auto" />
-        </StackPanel>
+                Grid.Column="1"
+                Height="Auto" 
+                SelectedDate="{Binding PreviousStatementTime, 
+                                    Converter={StaticResource dateToPersianDateConverter}, 
+                                    Mode=TwoWay}" 
+                />
+        </Grid>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="3">
-            <Label Grid.Row="4" Margin="10" >دوره مبنای قرارداد:</Label>
-            <ComboBox 
-                Margin="133 0 0 0"
-                Grid.Row="5" 
-                MinWidth="170"
-                DataContext="{Binding ElementName=UserControl, Path=DataContext}"
-                SelectedValue="{Binding EscallationInputDto.BaseTimeBox}"
-                ItemsSource="{Binding AllTimeBoxes }" />
-        </StackPanel>
 
-        <StackPanel Orientation="Horizontal" Grid.Row="4">
-            <Label Grid.Row="6" Margin="10" >ضریب به کار رفته در ضریب تعدیل:</Label>
-            <ComboBox 
-                DataContext ="{Binding DataContext, ElementName=UserControl}"
-                ItemsSource="{Binding Path=Coefficients}"
-                SelectedValue="{Binding Path=EscallationInputDto.Coefficient}"
-                MinWidth="170"
-                Margin="40 0 0 0"
-                Grid.Row="7" ></ComboBox>
-        </StackPanel>
+        <ComboBox
+            Margin="0 10 0 10"
+            Grid.Row="3"
+            ui:ControlHelper.Header="دوره مبنای قرارداد"
+            ui:ControlHelper.PlaceholderText="دوره مبنای قرارداد"
+            HorizontalAlignment="Stretch"
+            MinWidth="170"
+            DataContext="{Binding ElementName=UserControl, Path=DataContext}"
+            SelectedValue="{Binding EscallationInputDto.BaseTimeBox}"
+            ItemsSource="{Binding AllTimeBoxes }" />
 
-        <DockPanel Margin="0 100 0 0" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
+
+
+        <ComboBox 
+            Margin="0 10 0 10" 
+            ui:ControlHelper.Header="ضریب به کار رفته در تعدیل"
+            DataContext ="{Binding DataContext, ElementName=UserControl}"
+            ItemsSource="{Binding Path=Coefficients}"
+            SelectedValue="{Binding Path=EscallationInputDto.Coefficient}"
+            MinWidth="170"
+            Grid.Row="4" ></ComboBox>
+
+
+        <TextBox Grid.Row="5" Margin="0 10 0 10" ui:ControlHelper.Header="نام کارفرما" />
+
+        <TextBox Grid.Row="6" Margin="0 10 0 10" ui:ControlHelper.Header="نام پیمانکار"  />
+
+        <DockPanel Margin="0 100 0 0" Grid.Row="50" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" >
             <Button 
                 MaxWidth="100" 
                 MinHeight="40" 

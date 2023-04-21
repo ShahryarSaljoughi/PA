@@ -6,8 +6,9 @@ namespace Services.Abstractions
     {
         Task<List<TimeBox>> GetAllTimeBoxesAsync();
         Task LoadAsync();
-        Task SaveTimeboxAsync(TimeBox timeBox);
+        Task<TimeBox> SaveNewTimeboxAsync(TimeBox timeBox);
         Task<TimeBox> GetLastNonInterimTimeboxAsync();
         Task DeleteTimeboxAsync(TimeBox? selectedTimeBox);
+        Task<TimeBox> GetLatestNonInterimTimeboxBeforeAsync(TimeBox timebox);
     }
 }

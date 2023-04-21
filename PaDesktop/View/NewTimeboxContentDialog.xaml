@@ -16,7 +16,7 @@
     x:Name="dialog"
     Title="دوره جدید"
     PrimaryButtonText="ذخیره"
-    
+    IsPrimaryButtonEnabled="{Binding IsFormValid}"
     CloseButtonText="لغو"
     DefaultButton="Primary"
     PrimaryButtonClick="OnPrimaryButtonClick"
@@ -26,9 +26,11 @@
     Closed="OnClosed">
     <ui:ContentDialog.Resources>
         <converters:DateTimeToPersianDateConverter x:Key="dateToPersianDateConverter"/>
+        <converters:NullableDoubleConverter x:Key="nullableDoubleConverter"/>
+        <converters:NullableIntConverter x:Key="nullableIntConverter"/>
     </ui:ContentDialog.Resources>
     <ui:SimpleStackPanel Spacing="20" FlowDirection="RightToLeft">
-        <ui:NumberBox  Value="{Binding SolarYear}" PlaceholderText="سال" SpinButtonPlacementMode="Compact"/>
+        <ui:NumberBox  Value="{Binding SolarYear, Mode=OneWayToSource, Converter={StaticResource nullableIntConverter}}" PlaceholderText="سال" SpinButtonPlacementMode="Compact"/>
 
         <ComboBox SelectedValue="{Binding ThreeMonthNo}" ui:ControlHelper.PlaceholderText="سه ماهه" >
             <system:Int32>1</system:Int32>

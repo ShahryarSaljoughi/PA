@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:PaDesktop.View"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              mc:Ignorable="d" 
-             d:DesignHeight="768" d:DesignWidth="1056">
+             d:DesignHeight="1000" d:DesignWidth="1056">
 
 
     <Grid>
@@ -27,7 +27,7 @@
                 <ColumnDefinition Width="600" />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <ui:ScrollViewerEx Grid.Column="1" Margin="0 20">
+            <ui:ScrollViewerEx Grid.Column="1" Margin="0 20" Padding="5 5 15 5">
                 <ui:SimpleStackPanel Grid.Column="1" Margin="0 20">
                     <TextBlock TextWrapping="Wrap" >
                     نرم افزار حاضر در سال 1401 در معاونت مهندسی فرماندهی انتظامی استان زنجان اراده عمران و نوسازی طراحی و پیاده سازی شده است.

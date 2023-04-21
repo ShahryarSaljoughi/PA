@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.XPath;
 using DataModel.Model;
 using Microsoft.EntityFrameworkCore;
 using Services.Abstractions;
@@ -46,11 +47,15 @@ namespace Services
             TimeBoxes = await db.TimeBoxes.ToListAsync();
         }
 
-        public async Task SaveTimeboxAsync(TimeBox timeBox)
+        public async Task<TimeBox> SaveNewTimeboxAsync(TimeBox timeBox)
         {
+            var existing = await db.Set<TimeBox>().AnyAsync(t => t.Start ==  timeBox.Start && t.End == timeBox.End);
+            if (existing) return null;
+            
             db.TimeBoxes.Add(timeBox);
             if (TimeBoxes != null) { TimeBoxes.Add(timeBox); }
             await db.SaveChangesAsync();
+            return timeBox;
         }
 
         public async Task<TimeBox> GetLastNonInterimTimeboxAsync()
@@ -59,6 +64,14 @@ namespace Services
                 .Where(t => !t.IsInterim)
                 .OrderByDescending(t => t.End)
                 .First();
+            return result;
+        }
+        public async Task<TimeBox> GetLatestNonInterimTimeboxBeforeAsync(TimeBox timebox)
+        {
+            var result = await db.Set<TimeBox>()
+                .Where(t => t.End <= timebox.End)
+                .OrderByDescending(t => t.End)
+                .FirstOrDefaultAsync();
             return result;
         }
 
