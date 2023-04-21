@@ -53,6 +53,7 @@ namespace PaDesktop
             services.AddScoped<IExcelExportService, ExcelExportService>();
             services.AddScoped<IExcelCoverSheetCreator, ExcelCoverSheetCreator>();
             services.AddScoped<IExcelSubfieldsSumSheetCreator, ExcelSubfieldsSumSheetCreator>();
+            services.AddScoped<IExcelCalculationsSheetCreator, ExcelCalculationsSheetCreator>();
             services.AddTransient<Services.Abstractions.ILogger, Services.Logger>();
             RegisterSeriLogger(services);
 
